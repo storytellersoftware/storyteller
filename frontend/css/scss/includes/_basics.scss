@@ -1,0 +1,81 @@
+
+body { 
+  margin: 0; 
+  padding: 0;
+  background: $background;
+  color: $text;
+  font-size: 13px;
+  font-family: $sans;
+}
+
+label.checkbox {
+  display: block;
+}
+
+$highlight: hsla(77, 51%, 70%, .7);
+::selection {
+  background: $highlight; 
+  //color: white;
+}
+
+::-moz-selection {
+  background: $highlight; 
+  color: white;
+}
+
+textarea, input[type="text"], input[type="password"] {
+  @include iebox;
+  border-radius: 0px;
+  border: 1px solid $highlights;
+  margin: 10px;
+  padding: 10px;
+  line-height: 1.5em;
+  font-family: $sans;
+  width: 100%;
+  width: calc(100% - 20px);
+}
+
+.no-overflow { overflow: hidden; }
+
+.right { float: right; }
+.left  { float: left;  }
+
+#notification {
+  position: absolute;
+  z-index: 1000;
+  color: $text;
+  width: 100%;
+  border-radius: 5px;
+
+  div {
+    padding: 0px 0px 0px 10px;
+    line-height: 1.5em;
+  }
+
+  .goodNotification {
+    background: $lightgreen;
+  }
+
+  .badNotification {
+    background: $burntred;
+  }
+
+  .neutralNotification {
+    background: $darkbrown;
+    color: white;
+  }
+
+  .removeNotification {
+    float: right;
+    background: none;
+    border: none;
+    padding-right: 1px;
+
+    img {
+      height: 15px;
+      width: 15px;
+      color: black;
+      opacity: 0.6;
+    }
+  }
+}

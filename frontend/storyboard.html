@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Storyteller | Storyboards</title>
+
+  <!-- the location of the icon that shows up on the browser tab -->
+  <link rel="shortcut icon" href="img/favicon.ico" />
+
+  <!-- libraries -->
+    <script src="js/lib/jquery-2.0.3.min.js"></script>
+    <script src="js/lib/md5.js"></script>
+    <script src="js/lib/jquery.scrollTo-1.4.3.1-min.js"></script>
+
+
+  <!-- our scripts -->
+    <script src="js/server/storyboard/driver-list.js"></script>
+    <!-- ui stuff - used everywhere -->
+    <script src="js/core/global.js"></script>
+    <script src="js/server/rightclick.js"></script>
+    <script src="js/core/utilities.js"></script>
+
+    <!-- make the storyboard works stuff -->
+    <script src="js/server/storyboard/storyboard-list.js"></script>
+
+    <!-- additional stuffs of other natures -->
+    <script src="js/server/login.js"></script>
+    <script src="js/core/keyboard-shortcuts.js"></script>
+
+
+  <!-- for jquery ui -->
+    <link rel="stylesheet" href="css/lib/jquery-ui.css" />
+    <script src="js/lib/jqui/jquery-ui-1.10.3.custom.min.js"></script>
+
+
+  <!-- for tooltipster -->
+    <link rel="stylesheet" href="css/lib/tooltipster/tooltipster.css"/>
+    <script src="js/lib/jquery.tooltipster.min.js"></script>
+
+  
+  <!-- make our css last, giving us highest precedence -->
+    <link rel="stylesheet" href="css/storyteller/storyboard-list.css" />
+
+</head>
+<body>
+
+  <header>
+    <h1>
+      <span class="story">Story</span><span class="teller">teller</span>:
+      <span id="mode"></span>
+    </h1>
+
+    <ul class="nav">
+      <li><a id = 'playback-link' href="playback.html">Playback</a></li>
+      <li><a id = 'create-storyboard-link' href="create-storyboard.html">Create Storyboard</a></li>
+      <li><a id = 'storyboard-link' href="storyboard.html">Storyboards</a></li>
+      <!-- <li><a href="#" id="login">Login</a></li> -->
+    </ul>
+  </header>
+
+  <div id="storyboards">
+    
+  </div>
+
+</body>
+</html>

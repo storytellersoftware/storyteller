@@ -1,0 +1,31 @@
+# Set root logger level and create the appender (output device) stdout.
+log4j.rootLogger=DEBUG, stdout
+
+#custom logging levels can go here
+#Format them like log4j.logger.[package].[class name]
+#log4j.logger.StorytellerServer.SQLiteDatabase = info
+#log4j.logger.Playback.MockMergeHandler = debug
+
+# stdout is set to be a ConsoleAppender.
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+
+# stdout uses PatternLayout.
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=%-4r [%t] %-5p %c{1} %x - %m%n
+
+# Any name that starts with "timing" will be sent to the file about timings
+log4j.logger.timing = TRACE, timer
+#This prevents timing info from going to the stdout
+log4j.additivity.timing = false
+
+#If you don't want to see the timings of any particular class, see the following example
+log4j.logger.timing.StorytellerServer.DocumentBuffer = NONE
+log4j.logger.timing.StorytellerServer.MockIDE = NONE
+
+log4j.appender.timer = org.apache.log4j.RollingFileAppender
+log4j.appender.timer.MaxBackupIndex = 1
+log4j.appender.timer.layout=org.apache.log4j.PatternLayout
+log4j.appender.timer.layout.ConversionPattern=TIMING:\t%-7r\t[%c{1}]\t%m%n
+log4j.appender.timer.File=timing.log
+
+log4j.appender.timer.MaxFileSize=5MB

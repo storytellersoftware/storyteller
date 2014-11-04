@@ -1,0 +1,75 @@
+
+header {
+  @include iebox;
+  @include untouchables;
+
+  display: table;
+  width: 100%;
+
+  padding: 10px;
+
+  background-image: url('/img/butterfly-small.png');
+  background-repeat: no-repeat;
+  background-position: -32px -15px;
+
+  h1 {
+    font-size: 2em;
+
+    float: left; 
+    font-family: $serif;
+    font-weight: 400;
+
+    margin: 0;
+    padding: 0;
+    //line-height: 1em;
+
+    height: 35px;
+    display: table-cell;
+    vertical-align: middle;
+
+    overflow: hidden;
+    height: 1.5em;
+
+    span.story {
+      color: darken($darkgreen, 15%);
+    }
+    span.teller {
+      color: darken($lightgreen, 15%);
+      font-weight: 700;
+    }
+    span#mode {
+      color: lighten($text, 15%);
+    }
+  }
+
+  ul.nav {
+    float: right;
+    padding: 0; margin: 0;
+
+    display: table-cell;
+    vertical-align: middle;
+
+    li {
+      list-style: none;
+      display: inline-block;
+      margin-left: 10px;
+      padding: 10px;
+      background: $darkbrown;
+
+      a {
+        text-decoration: none;
+        color: $highlights;
+        font-weight: 700;
+
+        &:hover {
+          color: lighten($highlights, 10%);
+          border-bottom: 0px;
+        }
+        &:active {
+          color: lighten($highlights, 5%);
+          border-bottom: 0px;
+        }
+      }
+    }
+  }
+}

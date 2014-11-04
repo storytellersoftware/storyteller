@@ -1,0 +1,5 @@
+#ignore the sass-cache
+.sass-cache
+
+#ignore orig files
+.orig

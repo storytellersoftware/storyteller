@@ -1,0 +1,72 @@
+#filterSelect {
+  &:focus { outline: none; }
+
+  .times {
+    display: table;
+    width: 100%;
+    padding-bottom: 2em; 
+
+    // calendars. because calendars
+    .startTime, .endTime {
+      @include iebox;
+      width: 46%;
+
+      .calendar { 
+        //width: 100%; 
+        display: table;
+        margin: 0 auto;
+      }
+      .time { width: 29%; @include iebox; float: left; margin: 0 2%; }
+    }
+    .startTime { float: left; margin-left: 2%; }
+    .endTime { float: right; margin-right: 2%; }
+    
+    h3 { text-align: center; }
+
+    border-bottom: 1px solid #eee;
+  }
+
+  .docs, .devs {
+    float: left;
+    width: 46%;
+
+    label {
+      display: block;
+      padding: 5px 0;
+    }
+  }
+  .docs { margin-right: 2%; }
+  .devs { margin-left: 2%; }
+
+  .devtip {
+    display: table;
+
+    img, code {
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    img { padding-right: 20px; }
+  }
+
+
+  .devDoc {
+    display: table;
+    width: 100%;
+
+    border-bottom: 1px solid #eee;
+    padding-bottom: 2em;
+  }
+
+  .otherFilters {
+    display: table;
+    width: 100%;
+
+    .etcFilters, .hideDeletes {
+      width: 46%;
+      float: left;
+    }
+    .etcFilters { margin-right: 2%; }
+    .hideDeletes { margin-left: 2%; }
+  }
+}

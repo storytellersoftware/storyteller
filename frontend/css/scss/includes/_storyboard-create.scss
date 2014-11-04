@@ -1,0 +1,224 @@
+$borderSize: 5px;
+$cmdBorder: $highlights;
+$cmdbg: lighten($background, 7%);
+
+#storyboardCreate {
+  @include iebox;
+
+  border: $borderSize solid $highlights;
+  width: 100%;
+
+  .clip, .clipPlaceholder {
+    @include untouchables;
+    //@include iebox;
+
+    height: 80px;
+    width: 180px;
+    margin: 10px;
+    //padding: 10px;
+    background: darken($highlights, 5%);
+    border: 10px solid darken($highlights, 5%);
+
+    overflow: hidden;
+    float: left;
+
+    z-index: 10;
+
+    h2 {
+      font-size: 1.2em;
+      margin: 0;
+      padding: 0 0 10px;
+    }
+
+    p {
+      margin: 0; padding: 0;
+    }
+
+    button {
+      background: lighten($highlights, 2%);
+      border: darken($highlights,10%) solid 2px;
+      height: 23px;
+      line-height: 20px;
+      width: 23px;
+      padding: 2px;
+      float: right;
+      vertical-align: top;
+    }
+    img {
+      max-width: 15px;
+      max-height: 15px;
+      -webkit-filter: brightness(110%);
+      filter: brightness(110%);
+      &:hover {
+        -webkit-filter: brightness(80%);
+        filter: brightness(80%);
+      }
+    }
+
+  }
+
+  #timelineNcommands {
+    @include iebox;
+
+    bottom: 0px;
+    position: absolute;
+    width: 100%;
+    margin-left: -$borderSize;
+    background: $cmdbg;
+    border: $borderSize solid $cmdBorder;
+
+    #timeline {
+      @include untouchables;
+      @include iebox;
+
+      height: 150px;
+      padding-top: 10px;
+      padding-left: 10px;
+
+      float: left;
+      min-width: 100%;
+
+      .clipPlaceholder {
+        background: lighten($highlights, 5%);
+        border-color: lighten($highlights, 5%);
+      }
+
+      .clip button { display: none; }
+    }
+
+    #timelineHolder {
+      //margin-left: -$borderSize;
+      width: 100%;
+      width: calc(100% - (2 * $borderSize));
+      overflow-x: scroll;
+    }
+
+    $buttonSize: 30px;
+    button {
+      background: $cmdbg;
+      border: 0;
+
+      height: $buttonSize + 20px;
+      line-height: $buttonSize;
+      width: $buttonSize + 25px;
+      text-align: center;
+      vertical-align: middle;
+      padding: 10px;
+      //margin: 10px 5px;
+
+      border-left: $borderSize solid $cmdBorder;
+      margin-right: -5px;
+
+      &:last-child { margin-right: 0; }
+      &:first-child {
+        border-left: none;
+        width: $buttonSize + 20px;
+      }
+      
+      img {
+        max-width: $buttonSize;
+        max-height: $buttonSize;
+        -webkit-filter: brightness(110%);
+        filter: brightness(110%);
+        &:hover {
+          -webkit-filter: brightness(80%);
+          filter: brightness(80%);
+        }
+      }
+    }
+
+    #timelineCommands {
+      @include iebox;
+
+      border-bottom: $borderSize solid $cmdBorder;
+      width: 100%;
+      width: calc(100% - (2 * $borderSize));
+
+      height: $buttonSize + $borderSize + 20px;
+
+      //font-size: 1.5em;
+      line-height: $buttonSize;
+      font-family: $serif;
+      color: lighten($text, 10%);
+
+      .left {
+        @include iebox;
+        //width: 50%;
+        width: calc(100% - #{2 * ($buttonSize + 25px)} + 7px);
+        border: $borderSize solid $cmdBorder;
+        border-left: none;
+        margin-top: -$borderSize;
+        //padding: 10px;
+        height: 60px;
+        background: $cmdbg;
+
+        button {
+          border-right: 0;
+          border-left: 0;
+          width: $buttonSize + 20px;
+          margin: 0;
+
+          img {
+            -webkit-filter: brightness(150%);
+            filter: brightness(150%);
+
+            &:hover {
+              -webkit-filter: brightness(130%);
+              filter: brightness(130%);
+            }
+          }
+        }
+
+        #description {
+          display: none;
+        }
+      }
+
+      .right {
+        //border-left: $borderSize solid $cmdBorder;
+      }
+
+      #storyboardTitle {
+        background: transparent;
+        border: none;
+        width: 90%;
+        width: calc(100% - #{$buttonSize + 25px} - 20px);
+        padding: 15px 10px;
+        height: $buttonSize;
+        line-height: $buttonSize;
+        font-size: 1.5em;
+        font-family: $serif;
+        margin: 5 10px;
+        color: $text;
+
+        &.border {
+          border-bottom: 3px solid lighten($cmdBorder, 10%);
+        }
+
+        &:focus {
+          outline: 0px;
+        }
+      }
+    }
+  }
+}
+
+
+.hoverizer {
+  position: fixed;
+  bottom: 20px;
+  //right: 5px;
+  height: 150px;
+  width: 120px;
+  background: transparent;
+  //background: rgba(0,0,0,.3);
+  z-index: 10000;
+
+  &#left-hover {
+    left: 5px;
+  }
+
+  &#right-hover {
+    right: 5px;
+  }
+}

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="130"
+   height="130"
+   id="svg3876"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="gear.svg">
+  <defs
+     id="defs3878" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="5.6"
+     inkscape:cx="11.600258"
+     inkscape:cy="69.66474"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1027"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3946"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="65,105"
+       id="guide4018" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="65,70"
+       id="guide4020" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="65,65"
+       id="guide4022" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="25,85"
+       id="guide4030" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="-65,25"
+       id="guide4037" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="105,25"
+       id="guide4039" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata3881">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-922.36218)">
+    <path
+       style="fill:#78684e;fill-opacity:1;stroke:none"
+       d="M 65 0 C 55.062256 4.1187994e-07 61.099124 11.990423 51.5 14.5625 C 41.90088 17.134576 41.106335 3.7498796 32.5 8.71875 C 23.893661 13.687622 35.120796 21.066704 28.09375 28.09375 C 21.066706 35.120793 13.68762 23.893664 8.71875 32.5 C 3.7498784 41.106339 17.134578 41.900877 14.5625 51.5 C 11.990423 61.09912 -4.1187977e-07 55.06226 0 65 C 4.1187994e-07 74.937744 11.990423 68.900876 14.5625 78.5 C 17.134576 88.09912 3.7498796 88.893665 8.71875 97.5 C 13.687622 106.10634 21.066704 94.879204 28.09375 101.90625 C 35.120793 108.93329 23.893664 116.31238 32.5 121.28125 C 41.106339 126.25012 41.900877 112.86542 51.5 115.4375 C 61.09912 118.00958 55.06226 130 65 130 C 74.937744 130 68.900876 118.00958 78.5 115.4375 C 88.09912 112.86542 88.893665 126.25012 97.5 121.28125 C 106.10634 116.31238 94.879204 108.9333 101.90625 101.90625 C 108.93329 94.879207 116.31238 106.10634 121.28125 97.5 C 126.25012 88.893661 112.86542 88.099123 115.4375 78.5 C 118.00958 68.90088 130 74.93774 130 65 C 130 55.062256 118.00958 61.099124 115.4375 51.5 C 112.86542 41.90088 126.25012 41.106335 121.28125 32.5 C 116.31238 23.893661 108.9333 35.120796 101.90625 28.09375 C 94.879207 21.066706 106.10634 13.68762 97.5 8.71875 C 88.893661 3.7498784 88.099123 17.134578 78.5 14.5625 C 68.90088 11.990423 74.93774 -4.1187978e-07 65 0 z M 65 30 C 84.329966 30 100 45.670034 100 65 C 100 84.329966 84.329966 100 65 100 C 45.670034 100 30 84.329966 30 65 C 30 45.670034 45.670034 30 65 30 z "
+       transform="translate(0,922.36218)"
+       id="path4016" />
+  </g>
+</svg>

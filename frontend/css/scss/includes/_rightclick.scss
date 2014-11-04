@@ -1,0 +1,22 @@
+.custom-menu {
+  z-index:1000;
+  position:absolute;
+  border: 1px solid darken($highlights, 10%);
+  box-shadow: 0px 0px 3px $highlights;
+  //padding:5px;
+  background: lighten($background, 20%);
+
+  a {
+    color: $text;
+    text-decoration: none;
+    cursor: pointer;
+    display: block;
+    padding: 5px;
+  
+    &:hover {
+      text-decoration: none;
+      background: darken($background, 1%);
+      cursor: pointer;
+    }
+  }
+}

@@ -1,0 +1,45 @@
+@import 'http://fonts.googleapis.com/css?family=Bitter:400,700';
+@import 'http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700';
+
+
+// variables
+$background:    #ecead9; // mist
+$darkbrown:     #78684e; // octane
+$highlights:    #dddabe; // stone
+
+
+$lightgreen:    #77c262; // flyl(eft)
+$darkgreen:     #56924c; // flyr(ight)
+
+$burntred:      #ebaa7c; // delete color
+$subtlegreen:   #cade97; // insert color
+
+$text: darken($darkbrown, 15%);
+
+$fontsize:    20px;
+$borderSize:  5px;
+
+$serif:   Bitter, "Droid Serif", Georgia, serif;
+$sans:    "Open Sans", "Droid Sans", Helvetica, Arial, sans-serif;
+
+// mixins
+@mixin iebox {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@mixin untouchables {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+
+@import 'includes/basics';
+
+@import 'includes/header';
+@import 'includes/rightclick';
+@import 'includes/login';

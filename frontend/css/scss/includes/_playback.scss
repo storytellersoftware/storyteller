@@ -1,0 +1,335 @@
+$borderSize: 5px;
+
+
+
+#playbackArea {
+  $cmdBorder: $highlights;
+  $cmdbg: lighten($background, 7%);
+
+  @include iebox;
+
+  border: $borderSize solid $highlights; 
+  width: 100%;
+
+  &:focus {
+    outline: none;
+  }
+
+  #commands {
+    //$cmdBorder: darken($highlights, 10%);
+    //$cmdbg: $highlights;
+
+
+    @include iebox;
+    @include untouchables;
+
+    bottom: 0px;
+    position: fixed;
+
+    //width: calc(100%);
+    width: 100%;
+    margin-left: -$borderSize;
+
+    background: $cmdbg;
+    border: $borderSize solid $cmdBorder;
+
+    #movement, #locationHolder {
+      float: left;
+    }
+
+    #locationHolder {
+      @include iebox;
+      border-left: $borderSize solid $cmdBorder;
+      border-right: $borderSize solid $cmdBorder;
+
+      padding: 20px;
+      height: 80px;
+
+      #locationSlider {  margin-top: -6px; }
+
+      #timestamp {
+        position: absolute;
+        bottom: 10px;
+        text-align: center;
+      }
+    }
+
+    #etcCommands { float: right; }
+
+
+    $buttonSize: 60px;
+    button {
+      background: $cmdbg;
+      border: 0;
+
+      height: $buttonSize;
+      line-height: $buttonSize;
+      width: $buttonSize;
+      text-align: center;
+      vertical-align: middle;
+      padding: 0;
+      margin: 10px 5px;
+      
+      img {
+        max-width: $buttonSize;
+        max-height: $buttonSize;
+        
+        -webkit-filter: brightness(110%);
+        filter: brightness(110%);
+        &:hover {
+          -webkit-filter: brightness(80%);
+          filter: brightness(80%);
+        }
+      }
+
+      &#export {
+        display: none;
+      }
+
+      &.disabled {
+        img, img:hover {
+          opacity: 0.5;
+          -webkit-filter: none;
+          filter: none;
+        }
+      }
+      
+    }
+  }
+
+  pre {
+    @include iebox;
+
+    overflow: scroll;
+
+    padding: 20px;
+    margin: 0;
+
+    line-height: 1.5em;
+    font-family: "Source Code Pro", monospace;
+
+    .highlight {
+      background: darken($highlight, 25%) !important;
+    }
+    
+    .display-relevant {
+      font-weight:bold;
+    }
+    
+    .deleted-insert {
+      text-decoration:line-through;
+      font-style:italic;
+    }
+  }
+
+  #documents {
+    padding: 0px;
+    background: $background;
+    width: 100%;
+    float: left;
+
+    #documentTabs {
+      @include untouchables;
+      border-bottom: 2px solid $highlights;
+      padding: 10px 10px 0;
+      border-radius: 0px;
+      background: lighten($background, 5%);
+      height: 35px;
+      margin: 0;
+
+      li {
+        //@include iebox;
+        border: 1px solid $highlights;
+        border-radius: 4px 4px 0 0;
+        background: $highlights;
+        margin: 0 10px 0 0;
+
+        &.ui-tabs-active {
+          //height: calc(1em + 3px);
+          border-bottom:3px solid $background;
+          margin-bottom: -2px;
+          background: $background;
+        }
+
+        a { 
+          height: 1em;
+          padding: 10px 20px;
+          display: block;
+          background: transparent;
+          line-height: 1em;
+
+          color: $text;
+
+          //&:hover { background: darken($background, 10%); text-decoration: none; }
+        }
+      }
+    }
+
+    .documentDiv {
+      padding: 0;
+      position: absolute;
+      width: 100%;
+      background: $background;
+    }
+    
+    #developerPictures {
+      position: absolute;
+      top: 0;
+      right: 0;
+
+      img {
+        height: 45px;
+      }
+    }
+  }
+
+  #comments {
+    @include iebox;
+
+    width: 30%;
+    border-left: $borderSize solid $highlights;
+    float: right;
+
+    display: none;
+
+    overflow-y: auto;
+
+    #commentToggler {
+      display: none;
+      margin-left: -25px;
+      height: 25px;
+      width: 25px;
+      background-image: url(../../img/dropdown.svg);
+      background-size: 100%;
+    }
+
+    #newComment {
+      display: none;
+      border-bottom: $borderSize solid $highlights;
+
+      textarea {
+        height: 5 * 1.5em;
+      }
+    }
+
+    .comment, .clip, .description {
+      @include iebox;
+
+      width: 100%;
+      display: table;
+      font-size: 1em;
+
+      padding: 20px;
+
+      border-bottom: $borderSize solid $highlights;
+
+      white-space: pre-wrap;     
+      white-space: -moz-pre-wrap;
+      white-space: -pre-wrap;    
+      white-space: -o-pre-wrap;  
+      word-wrap: break-word;  
+
+      overflow: auto;
+      font-family: $sans;
+      cursor: pointer;
+
+      .commentImgs {
+        float: right;
+        padding: 0 0 1em 1em;
+      }
+    }
+
+    .clip {
+      h2:before{
+        content: "Clip: ";
+        font-size: 0.8em;
+      }
+
+      //background: darken($cmdbg, 2%);
+      //font-size: 1.2em;
+      background: lighten($background, 5%);
+    }
+
+    .description {
+      h1:before{
+        content: "Storyboard: ";
+        font-size: 0.8em;
+      }
+
+      background: lighten($background, 10%);
+      //background: $cmdbg;
+      //font-size: 1.5em;
+    }
+  }
+
+}
+
+#speedHolder {
+  width: 0;
+  padding: 20px 30px;
+  border: 1px solid darken($highlights, 10%);
+
+  position: absolute;
+  bottom: 100px;
+  background: lighten($highlights, 5%);
+
+  box-shadow: 0px 0px 3px $highlights;
+
+  #speedSlider {
+    margin-left: -6px;
+    height: 100%;
+  }
+}
+
+#locationSlider, #speedSlider {
+  background: lighten($highlights, 10%);
+  border-color: darken($highlights, 10%);
+
+  .ui-slider-range {
+    //background: darken($background, 10%);
+    background: $darkgreen;
+  }
+}
+
+#settingsMenu {
+  #fontSize { display: table; margin: 0 auto; }
+
+  #preFontMinus, #preFontPlus, #curFontSize {
+    border: 1px solid $highlights;
+    padding: 10px;
+    margin: 0;
+    line-height: 1.2em;
+    background: $background;
+    box-shadow: none;
+
+    @include iebox;
+
+    height: 35px;
+    float:left;
+    width: 2em;
+    text-align: center;
+  }
+
+  #preFontMinus { border-radius: 4px 0 0 4px; }
+  #preFontPlus { border-radius: 0 4px 4px 0;  }
+  #curFontSize { 
+    width: 5em; 
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+    height: 35px;
+    //margin-left: -4px;
+    //margin-top: -1px;
+  }
+}
+
+.custom-tooltip {
+  position: absolute;
+}
+
+
+#clipCreationDialog {
+  textarea {
+    height: 5 * 1.5em;
+  }
+}
