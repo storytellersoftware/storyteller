@@ -3,3 +3,23 @@
 
 #ignore orig files
 .orig
+
+# Gradle stuff
+build/
+.gradle
+
+.DS_Store
+Thumbs.db
+
+bin/
+gen/
+*.class
+
+local.properties
+.classpath
+.project
+.settings/
+.idea
+
+*.swp
+*~
