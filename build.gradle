@@ -18,3 +18,15 @@ dependencies {
 task wrapper(type: Wrapper) {
 	gradleVersion = '2.1'
 }
+
+jar {
+	manifest {
+		attributes 	'Main-Class': 'driver.DriverForPlugin',
+					'Implementation-Title': 'Storyteller'
+	}
+
+	baseName = 'storyteller'
+	from {
+		configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+	}
+}
