@@ -72,11 +72,11 @@ function stepForward(steps, animate) {
     //if this is a clip or storyboard playback
     else if(playback.type == 'clip' || playback.type == 'storyboard') {      
       //go through all the index values where there is a comment
-      for(var i = 0; i < playback.commentEventIndexValues.length;i++) {
+      for(var i = 0; i < playback.eventsWithCommentsIndexValues.length;i++) {
         //if we find a comment index beyond the current position
-        if(playback.commentEventIndexValues[i] > playback.position) {
+        if(playback.eventsWithCommentsIndexValues[i] > playback.position) {
           //calculate how many steps it will take to get there
-          steps = playback.commentEventIndexValues[i] - playback.position + 1; 
+          steps = playback.eventsWithCommentsIndexValues[i] - playback.position + 1; 
           break;
         }
       }

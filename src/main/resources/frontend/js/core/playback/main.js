@@ -53,7 +53,7 @@ var playback = {
   orderOfEvents: [],  // all events, in order of occurrence 
   //TODO when we have time to do it right, change the name of this to relevantEventIndexValues 
   relevantEvents: [], // position of relevant events in orderOfEvents (used for playback slider) //all relevant event IDs, in order of occurrence
-  commentEventIndexValues: [], //holds the index in orderOfEvents where there are comments
+  eventsWithCommentsIndexValues: [], //holds the index in orderOfEvents where there are comments
   playing: false,     // if we"re currently paused or playing (paused = false)
   position: 0,        // the current position in the playback
   player: null,       // the interval for our playing

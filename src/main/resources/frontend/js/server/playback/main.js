@@ -260,7 +260,7 @@ function addEventToPlayback(currentEvent) {
     //if there is now a comment id in the object
     if("commentID" in currentEvent) {
       //store the index of this event in the array of events that have comments
-      playback.commentEventIndexValues.push(playback.orderOfEvents.length - 1);
+      playback.eventsWithCommentsIndexValues.push(playback.orderOfEvents.length - 1);
     }
   }
 
