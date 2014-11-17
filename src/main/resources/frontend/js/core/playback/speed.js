@@ -18,6 +18,10 @@ function setupSpeed() {
   //hide is used so it is not animated
   $("#speedHolder").hide(); 
 
+  //add a checkbox so the user can skip animation altogether
+  $('<label />', { 'for': "skipAnimationCB", text: "Skip Animation" }).prependTo($("#speedHolder"));
+  $('<input />', { type: 'checkbox', id: "skipAnimationCB"}).prependTo($("#speedHolder"));
+  
   //setup the speed slider, even though it's hidden until you
   //click on the speedometer button.
   $("#speedSlider").slider({
@@ -30,7 +34,9 @@ function setupSpeed() {
     value: (101 - (playback.speed / 5)),
 
     //change the speed of the playback
-    slide: function(event, ui) { changeSpeed(ui.value); },
+    slide: function(event, ui) {
+      changeSpeed(ui.value); 
+    },
     
     /*
       This is required for knowing when to hide the slider.
@@ -60,7 +66,7 @@ function setupSpeed() {
       $("#speedHolder").data("sliding", true);
     }
   })
-
+     
   //show the tooltip of the slider's time value when hovering over it
   $("#speedSlider .ui-slider-handle").hover(function(event) {
     showSpeedTooltip();
@@ -163,9 +169,25 @@ function changeSpeed(percent) {
   //store the new speed in local storage
   localStorage.setItem("speed", playback.speed);
 
+  //if the user selected the max speed
+  if(percent == 100) {
+    //check the skip anim checkbox 
+    $("#skipAnimationCB").prop('checked', true);
+    
+    //indicate that we no longer need the playback to be animated 
+    playback.animate = false;
+  }
+  else {
+    //uncheck the skip anim checkbox
+    $("#skipAnimationCB").prop('checked', false);
+
+    //indicate that we do want the playback to be animated 
+    playback.animate = true;
+  }
+  	
   //if the user changes speed while in a playback 
   if (playback.playing) {
-    //pause
+    //pause and restart so the new speed takes
     playPause();
     //play at the new speed
     playPause();

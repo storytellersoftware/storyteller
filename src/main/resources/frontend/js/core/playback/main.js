@@ -51,13 +51,16 @@ var playback = {
   speed: 100,         // speed of playback in ms
   fontSize: 14,       // font size for playback documents
   orderOfEvents: [],  // all events, in order of occurrence 
+  //TODO when we have time to do it right, change the name of this to relevantEventIndexValues 
   relevantEvents: [], // position of relevant events in orderOfEvents (used for playback slider) //all relevant event IDs, in order of occurrence
+  commentEventIndexValues: [], //holds the index in orderOfEvents where there are comments
   playing: false,     // if we"re currently paused or playing (paused = false)
   position: 0,        // the current position in the playback
   player: null,       // the interval for our playing
-  type: 'regular',    // the type of playback - regular, storyboard, or clip
+  type: 'filtered',   // the type of playback - filtered, selection, clip, or storyboard
   clipNumber: 0,      // the current clip we are playing
-  documentID: "",
+  documentID: "",     //id of the document that has the focus
+  animate: true,      //whether or not we should animate the playback
 };
 
 

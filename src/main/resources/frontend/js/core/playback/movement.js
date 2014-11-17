@@ -23,12 +23,9 @@ function setupMovement() {
     range: "min",
     slide: function(event, ui) { 
       // move to the specified location
-      step(
-        playback.relevantEvents[ui.value],
-        false
-      )
+      step(playback.relevantEvents[ui.value], false);
     }
-  })
+  });
 }
 
 
@@ -65,6 +62,30 @@ function stepForward(steps, animate) {
   //clear out any highlight from a clip comment
   $(".highlight").removeClass("highlight");
 
+  //if the user wants to skip animation 
+  if(playback.animate == false) {
+    //if this is a filtered or selected text playback
+    if(playback.type == 'filtered' || playback.type == 'selection') {
+      //set the number of steps to a very large value to jump to the end
+      steps = Number.MAX_VALUE;      
+    }    
+    //if this is a clip or storyboard playback
+    else if(playback.type == 'clip' || playback.type == 'storyboard') {      
+      //go through all the index values where there is a comment
+      for(var i = 0; i < playback.commentEventIndexValues.length;i++) {
+        //if we find a comment index beyond the current position
+        if(playback.commentEventIndexValues[i] > playback.position) {
+          //calculate how many steps it will take to get there
+          steps = playback.commentEventIndexValues[i] - playback.position + 1; 
+          break;
+        }
+      }
+    }    
+    
+    //indicate there should be no animation
+    animate = false;
+  }
+  
   //helpers...
   //MM- not sure if I like these
   function isRelevant() {
@@ -172,7 +193,7 @@ function doStepForward(animate) {
   //if there is a commentID in the current event
   if ('commentID' in getOrderCurrent()) {
     //show the comment on the screen
-    showComment(getOrderCurrent().commentID);
+    showComment(getOrderCurrent().commentID);    
   }
 
   //move to the next event
