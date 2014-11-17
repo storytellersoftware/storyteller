@@ -1,10 +1,8 @@
 $borderSize: 5px;
 
-
-
 #playbackArea {
   $cmdBorder: $highlights;
-  $cmdbg: lighten($background, 7%);
+  $cmdBg: lighten($background, 7%);
 
   @include iebox;
 
@@ -17,7 +15,7 @@ $borderSize: 5px;
 
   #commands {
     //$cmdBorder: darken($highlights, 10%);
-    //$cmdbg: $highlights;
+    //$cmdBg: $highlights;
 
 
     @include iebox;
@@ -30,7 +28,7 @@ $borderSize: 5px;
     width: 100%;
     margin-left: -$borderSize;
 
-    background: $cmdbg;
+    background: $cmdBg;
     border: $borderSize solid $cmdBorder;
 
     #movement, #locationHolder {
@@ -59,7 +57,7 @@ $borderSize: 5px;
 
     $buttonSize: 60px;
     button {
-      background: $cmdbg;
+      background: $cmdBg;
       border: 0;
 
       height: $buttonSize;
@@ -71,9 +69,11 @@ $borderSize: 5px;
       margin: 10px 5px;
       
       img {
-        max-width: $buttonSize;
-        max-height: $buttonSize;
-        
+        //max-width: $buttonSize;
+        //max-height: $buttonSize;
+        max-width: 100%;
+        max-height: 100%;
+
         -webkit-filter: brightness(110%);
         filter: brightness(110%);
         &:hover {
@@ -94,6 +94,29 @@ $borderSize: 5px;
         }
       }
       
+      &#animationsToggle {
+        background: $cmdBg;
+        border: 2px solid $cmdBorder;
+        padding: 2px;
+
+        $overlaySize: $buttonSize / 2.5;
+        height: $overlaySize;
+        width: $overlaySize;
+        line-height: $overlaySize;
+
+        margin-left: -1 * ($overlaySize + 5px);
+        position: absolute;
+
+        opacity: 0.8;
+        &:hover {
+          opacity: 1;
+        }
+
+        img {
+          -webkit-filter: brightness(100%);
+          filter: brightness(100%);
+        }
+      }
     }
   }
 
@@ -245,7 +268,7 @@ $borderSize: 5px;
         font-size: 0.8em;
       }
 
-      //background: darken($cmdbg, 2%);
+      //background: darken($cmdBg, 2%);
       //font-size: 1.2em;
       background: lighten($background, 5%);
     }
@@ -257,7 +280,7 @@ $borderSize: 5px;
       }
 
       background: lighten($background, 10%);
-      //background: $cmdbg;
+      //background: $cmdBg;
       //font-size: 1.5em;
     }
   }

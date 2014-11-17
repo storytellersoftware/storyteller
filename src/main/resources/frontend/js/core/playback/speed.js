@@ -11,17 +11,15 @@
 */
 
 
-/* document ready
-  This sets up the speed slider's functionality and hides it when the document loads.
+/*  document ready
+    This sets up the speed slider's functionality and hides it when the document loads.
 */
 function setupSpeed() {
   //hide is used so it is not animated
   $("#speedHolder").hide(); 
 
-  //add a checkbox so the user can skip animation altogether
-  $('<label />', { 'for': "skipAnimationCB", text: "Skip Animation" }).prependTo($("#speedHolder"));
-  $('<input />', { type: 'checkbox', id: "skipAnimationCB"}).prependTo($("#speedHolder"));
-  
+  $('#animationsToggle').tooltipster();
+
   //setup the speed slider, even though it's hidden until you
   //click on the speedometer button.
   $("#speedSlider").slider({
@@ -40,14 +38,14 @@ function setupSpeed() {
     
     /*
       This is required for knowing when to hide the slider.
-      the slider is hidden if the user moves the mouse outside
+      The slider is hidden if the user moves the mouse outside
       of the speedHolder. If the user clicks and drags the mouse
       outside of the speedHolder, the speedHolder will not hide
       until the user releases the mouse.
     */
     stop: function(event, ui) {
       //check if the mouse has unclicked outside of the speedHolder
-      if($("#speedHolder").has($(event.toElement)).length == 0) {
+      if ($("#speedHolder").has($(event.toElement)).length == 0) {
         //create the timeout function to hide the speed slider
         $("#speedHolder").data("leaveTimeout", setTimeout(hideSpeedSlider, 1500));
       }
@@ -65,34 +63,34 @@ function setupSpeed() {
       //mouse ventures out of the speedHolder
       $("#speedHolder").data("sliding", true);
     }
-  })
+  });
      
   //show the tooltip of the slider's time value when hovering over it
   $("#speedSlider .ui-slider-handle").hover(function(event) {
     showSpeedTooltip();
-  })
+  });
 
   //setup our speed slider toggling.  
   //If the mouse leaves the speedHolder, set a timeout to hide the speedHolder
   $("#speedHolder").mouseleave(function() {
-    if(!$("#speedHolder").data("sliding")) {
+    if (!$("#speedHolder").data("sliding")) {
       $("#speedHolder").data("leaveTimeout", setTimeout(hideSpeedSlider, 1500));
     }
-  })
+  });
 
   //If the mouse enters the speedHolder, remove the timeout to hide the 
   //speedHolder
   $("#speedHolder").mouseenter(function() {
     clearTimeout($("#speedHolder").data("leaveTimeout"));
-  })
+  });
 
   //Do the same for our speed button now
   //If the mouse leaves the speed button, set a timeout to hide the speedHolder
   $("#speed").mouseleave(function() {
-    if($("#speedHolder").is(":visible")) {
+    if ($("#speedHolder").is(":visible")) {
       $("#speedHolder").data("leaveTimeout", setTimeout(hideSpeedSlider, 1500));
     }
-  })
+  });
 
   //If the mouse enters the speed button, remove the timeout to hide 
   //the speedHolder
@@ -101,12 +99,11 @@ function setupSpeed() {
   })
 }
 
-/* set up speed slider
+/*  set up speed slider
     set the size and location of the speed slider
     to become visible.
 */
 function setupSpeedSlider() {
-  
   //set the location of the speedholder
   $("#speedHolder").height($(window).height() / 3);
   $("#speedHolder").css("left", ($("#speed").position().left + 9) + "px");
@@ -139,8 +136,8 @@ function showSpeedTooltip() {
 
   var tooltip = $("<div/>", {
     class: 'custom-tooltip', 
-    id: 'speed-tool'}
-    ).text( (playback.speed / 1000) + " sec");
+    id: 'speed-tool'
+  }).text( (playback.speed / 1000) + " sec");
 
   tooltip.appendTo('body');
 
@@ -170,19 +167,11 @@ function changeSpeed(percent) {
   localStorage.setItem("speed", playback.speed);
 
   //if the user selected the max speed
-  if(percent == 100) {
-    //check the skip anim checkbox 
-    $("#skipAnimationCB").prop('checked', true);
-    
-    //indicate that we no longer need the playback to be animated 
-    playback.animate = false;
+  if (percent === 100) {
+    setPlaybackAnimations(false);
   }
   else {
-    //uncheck the skip anim checkbox
-    $("#skipAnimationCB").prop('checked', false);
-
-    //indicate that we do want the playback to be animated 
-    playback.animate = true;
+    setPlaybackAnimations(true);
   }
   	
   //if the user changes speed while in a playback 
@@ -195,4 +184,25 @@ function changeSpeed(percent) {
 
   //show the tooltip with the speed
   showSpeedTooltip();
+}
+
+function setPlaybackAnimations(animate) {
+  animate = !!animate;
+  if (animate === playback.animate) {
+    return;
+  }
+
+  playback.animate = animate;
+  if (animate) {
+    $("#animationsOffImg").hide();
+    $("#animationsOnImg").show();
+  }
+  else {
+    $("#animationsOnImg").hide();
+    $("#animationsOffImg").show();
+  }
+}
+
+function toggleAnimations() {
+  setPlaybackAnimations(!playback.animate);
 }
