@@ -1,11 +1,18 @@
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'application'
+plugins {
+	id 'java'
+	id 'application'
+
+	id 'eclipse'
+	id 'idea'
+
+	id "com.eriwen.gradle.js" version "1.12.1"
+}
 
 mainClassName = 'driver.DriverForPlugin'
 
 repositories {
 	mavenCentral()
+	jcenter()
 }
 
 dependencies {
@@ -13,6 +20,19 @@ dependencies {
 	compile 'org.json:json:20140107'
 	compile files('./src/main/resources/http-server.jar')
 	testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+
+javascript.source {
+	dev.js {
+		srcDir "src/main/resources/frontend/js"
+		include "**/*.js"
+		exclude "**/*.min.js"
+	}
+}
+
+jshint {
+	tasks.jshint.source = javascript.source.dev.js.files
+	tasks.jshint.dest = file("${buildDir}/jshint.out")
 }
 
 task wrapper(type: Wrapper) {
@@ -30,3 +50,4 @@ jar {
 		configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
 	}
 }
+
