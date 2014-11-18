@@ -60,3 +60,4 @@ function storyboardClick() {
   //A storyboard should always be the start.
   step(0, false);
 }
+

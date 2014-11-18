@@ -448,3 +448,4 @@ function unhoverizer() {
   clearInterval(interval)
   $(".hoverizer").remove()
 }
+

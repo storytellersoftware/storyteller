@@ -89,3 +89,4 @@ function changeMenuItem(elementID, num, item) {
 function removeMenuItem(elementID, num) {
   menu[elementID].splice(num, 1)
 }
+

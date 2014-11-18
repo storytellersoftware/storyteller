@@ -446,3 +446,4 @@ function findClipClearEvent(clipNumber) {
     }
   }
 }
+

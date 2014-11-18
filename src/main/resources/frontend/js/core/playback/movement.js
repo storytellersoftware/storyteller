@@ -591,3 +591,4 @@ function changeDocument(documentID, animate){
     $("#tab-" + documentID).trigger('click');
   }
 }
+

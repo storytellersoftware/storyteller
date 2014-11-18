@@ -162,3 +162,4 @@ function getGravatars() {
     dev['gravatar'] = "http://www.gravatar.com/avatar/" + md5(dev.email) + "?d=identicon"
   })
 }
+

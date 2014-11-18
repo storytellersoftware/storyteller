@@ -70,3 +70,4 @@ function deleteStoryboard(storyboardId) {
     })
   })
 }
+

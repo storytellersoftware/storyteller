@@ -206,3 +206,4 @@ function setPlaybackAnimations(animate) {
 function toggleAnimations() {
   setPlaybackAnimations(!playback.animate);
 }
+

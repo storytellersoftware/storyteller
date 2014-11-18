@@ -93,3 +93,4 @@ function getSavedSettings() {
     playback.fontSize = parseInt(localStorage.getItem("size"));
   }
 }
+

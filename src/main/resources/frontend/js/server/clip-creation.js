@@ -181,3 +181,4 @@ function closeClip() {
 
   setMode("playback")
 }
+

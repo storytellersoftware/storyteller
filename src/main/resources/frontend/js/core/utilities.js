@@ -258,3 +258,4 @@ function hideNotification() {
     $("#notification").empty()
   })
 }
+
