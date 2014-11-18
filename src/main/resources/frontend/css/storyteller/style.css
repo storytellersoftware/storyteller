@@ -1,1 +1,144 @@
-@import 'http://fonts.googleapis.com/css?family=Bitter:400,700';@import 'http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700';body{margin:0;padding:0;background:#ecead9;color:#4a4030;font-size:13px;font-family:"Open Sans","Droid Sans",Helvetica,Arial,sans-serif}label.checkbox{display:block}::selection{background:rgba(195,218,139,0.7)}::-moz-selection{background:rgba(195,218,139,0.7);color:white}textarea,input[type="text"],input[type="password"]{-moz-box-sizing:border-box;box-sizing:border-box;border-radius:0px;border:1px solid #dddabe;margin:10px;padding:10px;line-height:1.5em;font-family:"Open Sans","Droid Sans",Helvetica,Arial,sans-serif;width:100%;width:calc(100% - 20px)}.no-overflow{overflow:hidden}.right{float:right}.left{float:left}#notification{position:absolute;z-index:1000;color:#4a4030;width:100%;border-radius:5px}#notification div{padding:0px 0px 0px 10px;line-height:1.5em}#notification .goodNotification{background:#77c262}#notification .badNotification{background:#ebaa7c}#notification .neutralNotification{background:#78684e;color:white}#notification .removeNotification{float:right;background:none;border:none;padding-right:1px}#notification .removeNotification img{height:15px;width:15px;color:black;opacity:0.6}header{-moz-box-sizing:border-box;box-sizing:border-box;-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;display:table;width:100%;padding:10px;background-image:url("/img/butterfly-small.png");background-repeat:no-repeat;background-position:-32px -15px}header h1{font-size:2em;float:left;font-family:Bitter,"Droid Serif",Georgia,serif;font-weight:400;margin:0;padding:0;height:35px;display:table-cell;vertical-align:middle;overflow:hidden;height:1.5em}header h1 span.story{color:#386032}header h1 span.teller{color:#519b3c;font-weight:700}header h1 span#mode{color:#78684e}header ul.nav{float:right;padding:0;margin:0;display:table-cell;vertical-align:middle}header ul.nav li{list-style:none;display:inline-block;margin-left:10px;padding:10px;background:#78684e}header ul.nav li a{text-decoration:none;color:#dddabe;font-weight:700}header ul.nav li a:hover{color:#efeddf;border-bottom:0px}header ul.nav li a:active{color:#e6e4cf;border-bottom:0px}.custom-menu{z-index:1000;position:absolute;border:1px solid #cbc79d;box-shadow:0px 0px 3px #dddabe;background:#fff}.custom-menu a{color:#4a4030;text-decoration:none;cursor:pointer;display:block;padding:5px}.custom-menu a:hover{text-decoration:none;background:#eae8d6;cursor:pointer}#loginbox:focus{outline:none}
+@import 'http://fonts.googleapis.com/css?family=Bitter:400,700';
+@import 'http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700';
+body {
+  margin: 0;
+  padding: 0;
+  background: #ecead9;
+  color: #4a4030;
+  font-size: 13px;
+  font-family: "Open Sans", "Droid Sans", Helvetica, Arial, sans-serif; }
+
+label.checkbox {
+  display: block; }
+
+::selection {
+  background: rgba(195, 218, 139, 0.7); }
+
+::-moz-selection {
+  background: rgba(195, 218, 139, 0.7);
+  color: white; }
+
+textarea, input[type="text"], input[type="password"] {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 0px;
+  border: 1px solid #dddabe;
+  margin: 10px;
+  padding: 10px;
+  line-height: 1.5em;
+  font-family: "Open Sans", "Droid Sans", Helvetica, Arial, sans-serif;
+  width: 100%;
+  width: calc(100% - 20px); }
+
+.no-overflow {
+  overflow: hidden; }
+
+.right {
+  float: right; }
+
+.left {
+  float: left; }
+
+#notification {
+  position: absolute;
+  z-index: 1000;
+  color: #4a4030;
+  width: 100%;
+  border-radius: 5px; }
+  #notification div {
+    padding: 0px 0px 0px 10px;
+    line-height: 1.5em; }
+  #notification .goodNotification {
+    background: #77c262; }
+  #notification .badNotification {
+    background: #ebaa7c; }
+  #notification .neutralNotification {
+    background: #78684e;
+    color: white; }
+  #notification .removeNotification {
+    float: right;
+    background: none;
+    border: none;
+    padding-right: 1px; }
+    #notification .removeNotification img {
+      height: 15px;
+      width: 15px;
+      color: black;
+      opacity: 0.6; }
+
+header {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: table;
+  width: 100%;
+  padding: 10px;
+  background-image: url("/img/butterfly-small.png");
+  background-repeat: no-repeat;
+  background-position: -32px -15px; }
+  header h1 {
+    font-size: 2em;
+    float: left;
+    font-family: Bitter, "Droid Serif", Georgia, serif;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+    height: 35px;
+    display: table-cell;
+    vertical-align: middle;
+    overflow: hidden;
+    height: 1.5em; }
+    header h1 span.story {
+      color: #386032; }
+    header h1 span.teller {
+      color: #519b3c;
+      font-weight: 700; }
+    header h1 span#mode {
+      color: #78684e; }
+  header ul.nav {
+    float: right;
+    padding: 0;
+    margin: 0;
+    display: table-cell;
+    vertical-align: middle; }
+    header ul.nav li {
+      list-style: none;
+      display: inline-block;
+      margin-left: 10px;
+      padding: 10px;
+      background: #78684e; }
+      header ul.nav li a {
+        text-decoration: none;
+        color: #dddabe;
+        font-weight: 700; }
+        header ul.nav li a:hover {
+          color: #efeddf;
+          border-bottom: 0px; }
+        header ul.nav li a:active {
+          color: #e6e4cf;
+          border-bottom: 0px; }
+
+.custom-menu {
+  z-index: 1000;
+  position: absolute;
+  border: 1px solid #cbc79d;
+  box-shadow: 0px 0px 3px #dddabe;
+  background: white; }
+  .custom-menu a {
+    color: #4a4030;
+    text-decoration: none;
+    cursor: pointer;
+    display: block;
+    padding: 5px; }
+    .custom-menu a:hover {
+      text-decoration: none;
+      background: #eae8d6;
+      cursor: pointer; }
+
+#loginbox:focus {
+  outline: none; }

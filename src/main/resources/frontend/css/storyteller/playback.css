@@ -193,8 +193,8 @@ header {
       padding: 0;
       margin: 10px 5px; }
       #playbackArea #commands button img {
-        max-width: 60px;
-        max-height: 60px;
+        max-width: 100%;
+        max-height: 100%;
         -webkit-filter: brightness(110%);
         filter: brightness(110%); }
         #playbackArea #commands button img:hover {
@@ -206,6 +206,21 @@ header {
         opacity: 0.5;
         -webkit-filter: none;
         filter: none; }
+      #playbackArea #commands button#animationsToggle {
+        background: #f8f7f1;
+        border: 2px solid #dddabe;
+        padding: 2px;
+        height: 24px;
+        width: 24px;
+        line-height: 24px;
+        margin-left: -29px;
+        position: absolute;
+        opacity: 0.8; }
+        #playbackArea #commands button#animationsToggle:hover {
+          opacity: 1; }
+        #playbackArea #commands button#animationsToggle img {
+          -webkit-filter: brightness(100%);
+          filter: brightness(100%); }
   #playbackArea pre {
     -moz-box-sizing: border-box;
     box-sizing: border-box;

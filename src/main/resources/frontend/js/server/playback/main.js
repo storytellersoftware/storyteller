@@ -248,15 +248,23 @@ function grabEvents() {
   })
 }
 
-function addEventToPlayback(currentEvent) {
-  // is this something that displays comments?
-  if (playback.type == "storyboard" || playback.type == "clip") {
-    currentEvent = checkEventForComments(currentEvent)
-  }
-  
-  // add this event to the orderOfEvents array
+function addEventToPlayback(currentEvent) {  
+  //add this event to the orderOfEvents array
   playback.orderOfEvents.push(currentEvent)
 
+  //is this a playback that might have a comment
+  if (playback.type == "storyboard" || playback.type == "clip") {
+    //see if there is a comment associated with this event
+    currentEvent = checkEventForComments(currentEvent);
+    
+    //if there is now a comment id in the object
+    if("commentID" in currentEvent) {
+      //store the index of this event in the array of events that have comments
+      playback.eventsWithCommentsIndexValues.push(playback.orderOfEvents.length - 1);
+    }
+  }
+
+  
   // if, after all this filtering, the event is still relevant, add it to
   // our fancy relevantEvents array. relevantEvents is used only with the
   // location slider, because we don't want to let people click on a 
