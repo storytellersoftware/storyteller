@@ -11,7 +11,7 @@
 // grouping variables together is useful.
 var clipCreation = {
   inUse: false,
-}
+};
 
 function setupClipCreation() {
 
@@ -22,19 +22,17 @@ function setupClipCreation() {
     width: 500,
     title:"Create a Clip",
     position:$("#playback_clip").position(),
-    buttons: [
-    {
+    buttons: [{
       text: "Create Clip",
       click: function() { newClip(); }
-
     }],
   });
 
 
   $("#submitComment").click(function(event) { 
     event.preventDefault(); 
-    submitComment(clipCreation.selectedElements) 
-  })
+    submitComment(clipCreation.selectedElements);
+  });
 
 }
 
@@ -51,17 +49,17 @@ function clipCreate() {
   }
 */
 
-  $("#clipCreationDialog").dialog("open")
+  $("#clipCreationDialog").dialog("open");
 
-  var newComment = $("<a/>", { href: "#", onclick: "commentCreate()" })
+  var newComment = $("<a/>", { href: "#", onclick: "commentCreate()" });
   newComment.text("Add a comment");
 
-  changeMenuItem("playbackArea", 0, newComment)
+  changeMenuItem("playbackArea", 0, newComment);
 
-  var finishClip = $("<a/>", { href: "#", onclick: "closeClip()" })
-  finishClip.text("Close Clip")
+  var finishClip = $("<a/>", { href: "#", onclick: "closeClip()" });
+  finishClip.text("Close Clip");
 
-  addMenuItem("playbackArea", finishClip)
+  addMenuItem("playbackArea", finishClip);
 }
 
 /*  new clip
@@ -74,27 +72,27 @@ function clipCreate() {
 */
 function newClip() {
   //$("#clipCreationDialog").dialog("close");
-  clipCreation.inUse = true
+  clipCreation.inUse = true;
 
-  var clip = {}
+  var clip = {};
 
   // hard code, should only be available on regular playbacks
   //clip.filters = JSON.stringify(filters[0]) 
   
-  clip.name = $("#clipName").val()
-  clip.description = $("#clipDescription").val()
+  clip.name = $("#clipName").val();
+  clip.description = $("#clipDescription").val();
   //clip.developerGroupID = login.group
-  clip.sessionID = getPlaybackSessionId()
+  clip.sessionID = getPlaybackSessionId();
 
   $.post("/clip/new/sessionID/" + getPlaybackSessionId(), 
     {clip: JSON.stringify(clip)}, 
     function(data) {
-      clipCreation.clip = data.clipID
-      setMode("clip creation: " + clip.name)
+      clipCreation.clip = data.clipID;
+      setMode("clip creation: " + clip.name);
       $("#clipCreationDialog").dialog("close");
-      showGoodNotification("New clip created: " + clip.name, 5000)
+      showGoodNotification("New clip created: " + clip.name, 5000);
     }
-  ).fail(function() { alert("the server couldn't process your request"); })
+  ).fail(function() { alert("the server couldn't process your request"); });
 }
 
 
@@ -103,9 +101,9 @@ function newClip() {
     sections. It also adds focus to the text area.
 */
 function commentCreate() {
-  clipCreation.selectedElements = getSelectedElements()
-  showCommentSection()
-  $("#newComment").show()
+  clipCreation.selectedElements = getSelectedElements();
+  showCommentSection();
+  $("#newComment").show();
 }
 
 /*  submit comment
@@ -126,41 +124,41 @@ function submitComment(selectedElements) {
   }
   */
 
-  var comment = {}
-  comment.sessionID = getPlaybackSessionId()
-  comment.commentText = $("#commentText").val()
+  var comment = {};
+  comment.sessionID = getPlaybackSessionId();
+  comment.commentText = $("#commentText").val();
 
-  comment.eventID = playback.orderOfEvents[playback.position - 1].eventID
-  if (playback.position == 0)
-    comment.eventID = playback.orderOfEvents[0].eventID
+  comment.eventID = playback.orderOfEvents[playback.position - 1].eventID;
+  if (playback.position === 0) {
+    comment.eventID = playback.orderOfEvents[0].eventID;
+  }
 
   //comment.developerGroupID = login.group
   
   // highlighting
-  startElement = selectedElements[0]
-  endElement = selectedElements[selectedElements.length - 1]
+  startElement = selectedElements[0];
+  endElement = selectedElements[selectedElements.length - 1];
 
-  if(startElement != null){
-    startHightlightEvent = startElement.substr(startElement.indexOf("-") + 1)
-    endHighlightedEventID = endElement.substr(endElement.indexOf("-") + 1)
+  if (startElement !== null) {
+    startHightlightEvent = startElement.substr(startElement.indexOf("-") + 1);
+    endHighlightedEventID = endElement.substr(endElement.indexOf("-") + 1);
+  } else {
+    startHightlightEvent = 'null';
+    endHighlightedEventID = 'null';
   }
-  else {
-    startHightlightEvent = 'null'
-    endHighlightedEventID = 'null'
-  }
 
 
-  comment.startHighlightedEventID = startHightlightEvent
-  comment.endHighlightedEventID = endHighlightedEventID
+  comment.startHighlightedEventID = startHightlightEvent;
+  comment.endHighlightedEventID = endHighlightedEventID;
 
 
   $.post("/clip/" + clipCreation.clip + "/sessionID/" + getPlaybackSessionId() + "/comment/new", 
     { comment: JSON.stringify(comment) }, 
     function(data) {
-      hideCommentSection()
+      hideCommentSection();
       $("#commentText").val("");
     }
-  )  
+  );
 }
 
 /* close clip
@@ -169,16 +167,16 @@ function submitComment(selectedElements) {
   (As in the right menu changes and setMode is called)
 */
 function closeClip() {
-  clipCreation.inUse = false
-  delete clipCreation.clip
+  clipCreation.inUse = false;
+  delete clipCreation.clip;
  
-  removeMenuItem("playbackArea", 1)
+  removeMenuItem("playbackArea", 1);
   
-  var clipItem = $("<a/>", { href: "#", onclick: "clipCreate()" })
+  var clipItem = $("<a/>", { href: "#", onclick: "clipCreate()" });
   clipItem.text("Create clip");
 
-  changeMenuItem("playbackArea", 0, clipItem)
+  changeMenuItem("playbackArea", 0, clipItem);
 
-  setMode("playback")
+  setMode("playback");
 }
 

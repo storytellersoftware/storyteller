@@ -8,10 +8,11 @@ var debug = false;
     put some text in our scratch pad 
 */
 function scratch(str) {
-  if (debug)
+  if (debug) {
     $("#scratchpad").text(str);
-  else
-    console.log(str)
+  } else {
+    console.log(str);
+  }
 }
 
 
@@ -19,10 +20,11 @@ function scratch(str) {
     put some nicely formatted json in our scratch pad 
 */
 function scratch_json(json) {
-  if (debug)
-    scratch(JSON.stringify(json, null, 2))
-  else
-    console.log(json)
+  if (debug) {
+    scratch(JSON.stringify(json, null, 2));
+  } else {
+    console.log(json);
+  }
 }
 
 
@@ -37,7 +39,7 @@ $.scrollbarWidth = function() {
       width: 50,
       height: 50,
       overflow: 'auto'
-    }).append("<div/>")
+    }).append("<div/>");
 
     parent.appendTo('body');
 
@@ -54,17 +56,17 @@ $.scrollbarWidth = function() {
     Highlight an element for a set amount of time.
 */
 function highlightElement(element, time, highlightColor) {
-  var originalColor = $(element).css("background-color")
+  var originalColor = $(element).css("background-color");
   
   $(element).animate({"background-color": highlightColor}, {
     duration: 100, 
     easing: "linear",
     done: function() {
       setTimeout(function() {
-        $(element).animate({"background-color": originalColor}, {duration: 300})
-      }, time)
+        $(element).animate({"background-color": originalColor}, {duration: 300});
+      }, time);
     }
-  })
+  });
 }
 
 
@@ -73,14 +75,15 @@ function highlightElement(element, time, highlightColor) {
     out.
 */
 function fadeRemove(elementID) {
-  $("#" + elementID)
-  .stop()
-  .animate({"opacity": "0"}, {duration: 100,
+  var element = $("#" + elementID);
+  element.stop();
+  element.animate({"opacity": "0"}, {
+    duration: 100,
     easing: "linear",
     done: function() {
-      this.remove()
+      this.remove();
     }
-  })
+  });
 }
 
 
@@ -90,10 +93,15 @@ function fadeRemove(elementID) {
 */
 $.fn.fadeRemove = function() {
   this.stop().animate(
-    {"opacity": "0"}, 
-    {duration: 100, easing: "linear", done: function() { this.remove() } }
-  )
-}
+    {"opacity": "0"},
+    { duration: 100,
+      easing: "linear",
+      done: function() {
+        this.remove();
+      }
+    }
+  );
+};
 
 
 /*  date formate
@@ -101,7 +109,6 @@ $.fn.fadeRemove = function() {
     return a string form of the date in MM/DD/YYYY hh:mm format
 */
 function dateFormat(date) {
-  
   // if this isn't a date, return nothing.
   // obviously it's a user error...
   if (isNaN(date.getDate())) {
@@ -123,12 +130,12 @@ function dateFormat(date) {
   var amOrPm = hour < 12 ? "AM" : "PM";
   
   //if it is the midnight hour
-  if(hour == 0) {
+  if (hour === 0) {
     //show 12 instead of 0
     hour = 12;
   }
   //if it is afternoon
-  else if(hour > 12) {
+  else if (hour > 12) {
     //get the pm hour
     hour = hour - 12;
   }
@@ -152,45 +159,43 @@ function dateFormat(date) {
   dstring += date.getMilliseconds();
   */
 
-  return dstring
+  return dstring;
 }
 
 
 
 function getSelectedElements() {
-  var ids = []
+  var ids = [];
 
-  var selection = window.getSelection()
+  var selection = window.getSelection();
 
   // return an array of nulls
   if(selection.type != "Range"){
     return [null,null];
   }
 
-  var elements = $(selection.getRangeAt(0).cloneContents()).children()
+  var elements = $(selection.getRangeAt(0).cloneContents()).children();
 
   // We had to use a regular for loop and not a for each because the for each
   // was an asynchronous call.
-  for(var i=0; i < elements.length; i++) {
-    //ids.push(elements[i].id.substring(elements[i].id.indexOf("-") + 1))
-    ids.push(elements[i].id)
+  for (var i = 0; i < elements.length; i++) {
+    ids.push(elements[i].id);
   }
 
-  return ids
+  return ids;
 }
 
 /*  highlight elements
     Highlights a group of elements from start id to and end id
 */
 function highlightElements(start, end) {
-  var currentID = start
+  var currentID = start;
   while(currentID != end) {
-    $("#" + currentID).addClass("highlight")
-    currentID = $("#" + currentID).next().attr("id")
+    $("#" + currentID).addClass("highlight");
+    currentID = $("#" + currentID).next().attr("id");
   }
 
-  $("#" + currentID).addClass("highlight")
-
+  $("#" + currentID).addClass("highlight");
 }
 
 /*  show good notification
@@ -198,7 +203,7 @@ function highlightElements(start, end) {
     It will hide itself after `timeToShow` seconds
 */
 function showGoodNotification(html, timeToShow) {
-  showNotification(html, timeToShow, "goodNotification")
+  showNotification(html, timeToShow, "goodNotification");
 }
 
 /*  show bad notification
@@ -206,7 +211,7 @@ function showGoodNotification(html, timeToShow) {
     It will hide itself after `timeToShow` seconds
 */
 function showBadNotification(html, timeToShow) {
-  showNotification(html, timeToShow, "badNotification")
+  showNotification(html, timeToShow, "badNotification");
 }
 
 /*  show neutral notification
@@ -214,7 +219,7 @@ function showBadNotification(html, timeToShow) {
     It will hide itself after `timeToShow` seconds
 */
 function showNeutralNotification(html, timeToShow) {
-  showNotification(html, timeToShow, "neutralNotification")
+  showNotification(html, timeToShow, "neutralNotification");
 }
 
 /*  show notification
@@ -224,26 +229,26 @@ function showNeutralNotification(html, timeToShow) {
 */
 function showNotification(html, timeToShow, className) {
   // Remove the old notification shown to make room for the new one.
-  hideNotification()
+  hideNotification();
 
   // Create the element and add it to the screen.
   var notification = $("<div/>", {
     class: className,
-  })
-  .html(html)
+  });
+  notification.html(html);
 
   // Add an exit button to the end of the notification.
-  $("<button/>", {
+  var closeButton = $("<button/>", {
     click: hideNotification,
     class: "removeNotification",
-  })
-  .html("<image src='/img/xblack.svg'></image>")
-  .appendTo(notification)
+  });
+  closeButton.html("<image src='/img/xblack.svg'></image>");
+  closeButton.appendTo(notification);
 
-  $("#notification").hide().append(notification).slideDown()
+  $("#notification").hide().append(notification).slideDown();
 
   // Create a timeout so we can delete the element after some time.
-  $("#notification").data("timeToShow", setTimeout(hideNotification, timeToShow))
+  $("#notification").data("timeToShow", setTimeout(hideNotification, timeToShow));
 }
 
 /*  hideNotification
@@ -251,11 +256,10 @@ function showNotification(html, timeToShow, className) {
 */
 function hideNotification() {
   // Clear the timer so it doesn't try to hide it again later.
-  clearTimeout($("#notification").data("timeToShow"))
+  clearTimeout($("#notification").data("timeToShow"));
 
   // Animate it sliding up, than empty the notifications div.
   $("#notification").find("div").slideUp(function() {
-    $("#notification").empty()
-  })
+    $("#notification").empty();
+  });
 }
-

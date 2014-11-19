@@ -1,4 +1,4 @@
-var storyboards = {}
+var storyboards = {};
 
 function setupStoryboardList() {
   //get any data from the url- ../playback.html?par1=1&par2=2 => {par1: 1, par2:2}
@@ -22,12 +22,12 @@ function setupStoryboardList() {
 function grabAllStoryboards() {
 
   $.getJSON('/storyboard/all/sessionID/' + getPlaybackSessionId(), function(data) {
-    storyboards = data
+    storyboards = data;
 
     $.each(storyboards, function(i, storyboard) {
-      makeStoryboard(storyboard)
-    })
-  })
+      makeStoryboard(storyboard);
+    });
+  });
 }
 
 /* make storyboard
@@ -45,7 +45,7 @@ function makeStoryboard(storyboard) {
           "<img src='/img/playback/play.svg'></button>" +
           "<button onClick='deleteStoryboard(\"" + storyboard.ID + "\")'>" +
           "<img src='/img/x.svg'></button>")
-    .appendTo("#storyboards")
+    .appendTo("#storyboards");
 }
 
 /* play storyboard
@@ -66,8 +66,8 @@ function deleteStoryboard(storyboardId) {
 
   $.get('/storyboard/' + storyboardId + '/delete/sessionID/' + getPlaybackSessionId(), function() {
     $('#'+id).effect("fade", {} , 200, function() {
-      $(this).remove()
-    })
-  })
+      $(this).remove();
+    });
+  });
 }
 

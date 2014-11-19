@@ -27,6 +27,7 @@ javascript.source {
 		srcDir "src/main/resources/frontend/js"
 		include "**/*.js"
 		exclude "**/*.min.js"
+		exclude "lib/*"
 	}
 }
 

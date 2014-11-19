@@ -12,10 +12,10 @@
 
 function setupSettings() {
   $("#settingsMenu").dialog({
-    autoOpen:false,
-    resizable:true,
-    draggable:true,
-    height:220,
+    autoOpen: false,
+    resizable: true,
+    draggable: true,
+    height: 220,
     width: 200,
     title: "Settings",
 
@@ -24,12 +24,12 @@ function setupSettings() {
       $("#curFontSize").val(playback.fontSize);
      
       $("#curFontSize").keypress(function(event) {
-        //if the user presses enter???
-        if (event.which == 13) {
+        //if the user presses enter
+        if (event.which === 13) {
           //change the font size
           changeFontSize(parseInt($("#curFontSize").val()));
         }
-      })
+      });
     }
   });
 }
@@ -41,8 +41,7 @@ function setupSettings() {
 function toggleSettings() {
   if ($('#settingsMenu').dialog('isOpen')) {
     $('#settingsMenu').dialog('close');
-  }
-  else {
+  } else {
     $('#settingsMenu').dialog('open');
   }
 }
@@ -83,13 +82,13 @@ function changeFontSize(size) {
 */
 function getSavedSettings() {
   //if the user has set a speed before, reuse it
-  if (localStorage.getItem("speed") != null) {
+  if (localStorage.getItem("speed") !== null) {
     //store the recovered speed
     playback.speed = parseInt(localStorage.getItem("speed"));
   }
 
   //if the user has set a font size before, reuse it
-  if (localStorage.getItem("size") != null) {
+  if (localStorage.getItem("size") !== null) {
     playback.fontSize = parseInt(localStorage.getItem("size"));
   }
 }
