@@ -9,11 +9,11 @@
 */
 
 // holds menu information
-var menu = {}
+var menu = {};
 
 function setupRightClick() {
   // remove custom menus when someone clicks somewhere
-  $(document).bind('click', function(event) { $(".custom-menu").remove() })
+  $(document).bind('click', function(event) { $(".custom-menu").remove(); });
 }
 
 /*  create menu
@@ -23,12 +23,12 @@ function setupRightClick() {
     custom menus.
 */
 function createMenu(elementID) {
-  menu[elementID] = []
+  menu[elementID] = [];
 
   $("#" + elementID).bind('contextmenu', function(event) { 
     //event.preventDefault();
     putMenu(elementID, event);
-  })
+  });
 }
 
 
@@ -38,31 +38,35 @@ function createMenu(elementID) {
 function putMenu(elementID, event) {
   $(".custom-menu").remove();
 
-  console.log(event.target)
-  if (event.target.nodeName == "TEXTAREA" || event.target.nodeName == "INPUT")
-    return
+  console.log(event.target);
+  if (event.target.nodeName === "TEXTAREA" || event.target.nodeName === "INPUT") {
+    return;
+  }
 
-  event.preventDefault()
-  var div = $("<div/>", { class: 'custom-menu' })
+  event.preventDefault();
+  var div = $("<div/>", { class: 'custom-menu' });
   $.each(menu[elementID], function(i, item) {
-    if (i === "separator")
-      div.append("<hr/>")
-    else
-      div.append(item)
-  })
+    if (i === "separator") {
+      div.append("<hr/>");
+    } else {
+      div.append(item);
+    }
+  });
 
   var top = event.pageY;
   var left = event.pageX;
 
   div.appendTo("body");
 
-  if (top + div.outerHeight() > $(window).height())
+  if (top + div.outerHeight() > $(window).height()) {
     top = $(window).height() - div.outerHeight();
+  }
 
-  if (left + div.outerWidth() > $(window).width())
-    left = $(window).width() - div.outerWidth()
+  if (left + div.outerWidth() > $(window).width()) {
+    left = $(window).width() - div.outerWidth();
+  }
 
-  div.css({top: top + "px", left: left + "px"})
+  div.css({top: top + "px", left: left + "px"});
 }
 
 
@@ -70,7 +74,7 @@ function putMenu(elementID, event) {
     Add an item to a menu. Items should be jquery objects
 */
 function addMenuItem(elementID, item) {
-  menu[elementID].push(item)
+  menu[elementID].push(item);
 }
 
 
@@ -79,7 +83,7 @@ function addMenuItem(elementID, item) {
     Should be a jquery object.
 */
 function changeMenuItem(elementID, num, item) {
-  menu[elementID][num] = item
+  menu[elementID][num] = item;
 }
 
 
@@ -87,5 +91,5 @@ function changeMenuItem(elementID, num, item) {
     Remove an item from a menu.
 */
 function removeMenuItem(elementID, num) {
-  menu[elementID].splice(num, 1)
+  menu[elementID].splice(num, 1);
 }

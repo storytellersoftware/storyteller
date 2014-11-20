@@ -20,7 +20,7 @@ var login = {
     }, ...
   }
 */
-var developerGroups = {}
+var developerGroups = {};
 
 /*
   developers = {
@@ -33,7 +33,7 @@ var developerGroups = {}
     }, ...
   }
 */
-var developers = {}
+var developers = {};
 
 /*
 function setupLoginBox() {
@@ -129,7 +129,7 @@ function getDevelopers() {
       var group = {
         developers: [],
         developerGroupID: devGroup.ID
-      }
+      };
 
       $.each(devGroup.developers, function(j, dev) {
         if (!(dev.ID in developers)) {
@@ -138,19 +138,19 @@ function getDevelopers() {
             firstName: dev.firstName,
             lastName: dev.lastName,
             email: dev.email
-          }
+          };
         }
 
-        group.developers.push(dev.ID)
-      })
+        group.developers.push(dev.ID);
+      });
 
-      developerGroups[devGroup.ID] = group
-    })
+      developerGroups[devGroup.ID] = group;
+    });
 
     // setup developers for login menu
-    getGravatars() 
+    getGravatars();
     //setupLogin()
-  })
+  });
 }
 
 
@@ -159,6 +159,7 @@ function getDevelopers() {
 */
 function getGravatars() {
   $.each(developers, function(i, dev) {
-    dev['gravatar'] = "http://www.gravatar.com/avatar/" + md5(dev.email) + "?d=identicon"
-  })
+    dev.gravatar = "http://www.gravatar.com/avatar/" + md5(dev.email) + "?d=identicon";
+  });
 }
+

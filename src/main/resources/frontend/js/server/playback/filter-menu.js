@@ -56,7 +56,7 @@ function setupFilterMenu() {
     draggable:      true,
     resizeable:     false,
     closeOnEscape:  false,
-    height:         $(window).height() * .8,
+    height:         $(window).height() * 0.8,
     width:          535,
     minWidth:       535,
     title:          "Filters",
@@ -65,9 +65,9 @@ function setupFilterMenu() {
     buttons: [{
         text: "Submit",
         click: function() { 
-          $(this).dialog('close')
-          setupPlaybackInterface()
-          submitFilters() 
+          $(this).dialog('close');
+          setupPlaybackInterface();
+          submitFilters();
         }
     }],
   });
@@ -113,7 +113,7 @@ function getNodes() {
       //record the one open node
       if (node.type == "OPEN_NODE") {
         openNode = node.ID;
-        node.name = node.name + " (Open Node)"
+        node.name = node.name + " (Open Node)";
         $("#selectedNodeName").empty();
         $("#selectedNodeName").append("Selected Node: " + node.name);
         $("#selectedNodeDescription").empty();
@@ -130,12 +130,12 @@ function getNodes() {
         name: node.name,
         description: node.description,
         type: node.type,
-      }
+      };
     });
 
     $.each(nodes, function(i, parent) {
       $.each(nodes, function(j, child) {
-        if (parent.ID == child.parentNodeID) {
+        if (parent.ID === child.parentNodeID) {
           parent.children.push(child.ID);
           child.parents.push(parent.ID);
         }
@@ -143,7 +143,7 @@ function getNodes() {
     });
 
     createNodeTree(nodes, rootNode, openNode);
-  })
+  });
 }
 
 function createNodeTree(nodes, rootNode, selectedNode) {
@@ -168,8 +168,9 @@ function createNodeTree(nodes, rootNode, selectedNode) {
       //TODO get the name and description of the node in the UI somehow, right now it is only an id
     });
 
-    if (node.ID == selectedNode)
+    if (node.ID == selectedNode) {
       input.attr('checked', 'checked');
+    }
 
     node.li.append(input);
     node.li.append(node.name);
@@ -179,7 +180,7 @@ function createNodeTree(nodes, rootNode, selectedNode) {
       nodes[node.parentNodeID].ul.append(node.li);
     }
   });
-  $.each(nodes, function(i, node) { node.li.append(node.ul) });
+  $.each(nodes, function(i, node) { node.li.append(node.ul); });
 
   ul.append(nodes[rootNode].li);
   $("#nodeSelect").append(ul);
@@ -201,7 +202,7 @@ function createNodeTree(nodes, rootNode, selectedNode) {
     $("#nodeSelect").dialog('close');
 
     getNode(filters.nodeID);
-  })
+  });
   button.appendTo($("#nodeSelect"));
   
   //end comment out here
@@ -232,8 +233,7 @@ function getNode(nodeID) {
     if(playback.type != "selection") {
       //show the filter select dialog
       $("#filterSelect").dialog('open');
-    }
-    else {
+    } else {
       submitFilters();
     }
   });
@@ -257,7 +257,7 @@ function setupFilters(json) {
     maxDate:      endDate,
     minDate:      startDate,
 
-    onSelect:     function(dateText, inst) { updateTimes() }
+    onSelect:     function(dateText, inst) { updateTimes(); }
   });
 
   $("#endCalendar").datepicker({
@@ -265,7 +265,7 @@ function setupFilters(json) {
     maxDate:      endDate,
     minDate:      startDate,
 
-    onSelect:     function(dateText, inst) { updateTimes() }
+    onSelect:     function(dateText, inst) { updateTimes(); }
   });
 
    // time selectors
@@ -275,12 +275,13 @@ function setupFilters(json) {
   makeDocumentsList();
   makeDevelopersList();
 
-  if (localStorage.getItem('hideDeleteLimit') != null)
+  if (localStorage.getItem('hideDeleteLimit') !== null) {
     $("#hideDeleteLimit").val(localStorage.getItem('hideDeleteLimit'));
-  // else is here because Firefox doesn't respect the value attribute on a
-  // number input
-  else
+  } else {
+    // else is here because Firefox doesn't respect the value attribute on a
+    // number input
     $("#hideDeleteLimit").val(0);
+  }
 }
 
 
@@ -320,9 +321,9 @@ function submitFilters() {
   var devGroups = [];
   $("input[type=checkbox].developer:checked").each(function() {
     devGroups.push($(this).val());
-  })
+  });
 
-  filterMenu['developerGroupIDs'] = devGroups;
+  filterMenu.developerGroupIDs = devGroups;
 
   // remove the documents item from the filters because we want it fresh
   delete filterMenu.documentArray;
@@ -333,29 +334,28 @@ function submitFilters() {
   });
 
   //store the ids of the selected documents 
-  filterMenu['documentIDs'] = docs;
+  filterMenu.documentIDs = docs;
 
-  filterMenu['hideDeleteLimit'] = $("#hideDeleteLimit").val();
+  filterMenu.hideDeleteLimit = $("#hideDeleteLimit").val();
   localStorage.setItem("hideDeleteLimit", filterMenu.hideDeleteLimit);
   
   //get the block type- chars, words, lines, endResult
-  filterMenu['relevantBlockType'] = $("input[name=relevantBlockType]:checked").val();
+  filterMenu.relevantBlockType = $("input[name=relevantBlockType]:checked").val();
   
   //if the block type is show only the end result
-  if(filterMenu['relevantBlockType'] == "endResult") {
+  if(filterMenu.relevantBlockType == "endResult") {
     //the block type doesn't really matter- but set it to chars anyway
-    filterMenu['relevantBlockType'] = "chars";
+    filterMenu.relevantBlockType = "chars";
     
     //indicate that we want end result only
-    filterMenu['showOnlyEndResult'] = true;    
-  }
-  else {
+    filterMenu.showOnlyEndResult = true;
+  } else {
     //this will not be an end result only
-    filterMenu['showOnlyEndResult'] = false;
+    filterMenu.showOnlyEndResult = false;
   }
   
   //get whether the user wants paste origins
-  filterMenu['showPasteOrigin'] = $("#showPasteOrigin").is(":checked");
+  filterMenu.showPasteOrigin = $("#showPasteOrigin").is(":checked");
 
   $.post('/playback/filter/sessionID/' + getPlaybackSessionId(), 
     { 'filters': JSON.stringify(filterMenu) }, 
@@ -395,7 +395,7 @@ function makeDevelopersList() {
       checked: 'yes'
     })
     .click(function() { 
-      $(".developer").prop('checked', $(this).is(':checked')) 
+      $(".developer").prop('checked', $(this).is(':checked'));
     })
   );
   
@@ -420,8 +420,8 @@ function makeDevelopersList() {
     $.each(devGroup.developers, function(i, devID) {
       var dev = developers[devID];
 
-      var devDisp = $('<span/>', { class: 'tooltip' })
-      .text(
+      var devDisp = $('<span/>', { class: 'tooltip' });
+      devDisp.text(
         dev.firstName + " " + dev.lastName + 
         (i < devGroup.developers.length - 1 ? ', ' : '')
       );
@@ -438,10 +438,10 @@ function makeDevelopersList() {
 
 
       devDisp.appendTo(devg);
-    })
+    });
 
     devg.appendTo('#filterDevelopers');
-  })
+  });
 
   $('.tooltip').tooltipster();
 }
@@ -461,7 +461,7 @@ function makeDocumentsList() {
       checked: 'yes'
     })
     .click(function() { 
-      $(".document").prop('checked', $(this).is(':checked')) 
+      $(".document").prop('checked', $(this).is(':checked'));
     })
   );
   
@@ -479,7 +479,7 @@ function makeDocumentsList() {
     }));
     docu.append(doc.documentName);
     docu.appendTo('#filterDocuments');
-  })
+  });
 }
 
 
@@ -529,9 +529,9 @@ function updateTimes() {
 
   // if the current start date is the same as the minimum date
   if (
-    startDate.getYear() == minDate.getYear() &&
-    startDate.getMonth() == minDate.getMonth() &&
-    startDate.getDay() == minDate.getDay()
+    startDate.getYear() === minDate.getYear() &&
+    startDate.getMonth() === minDate.getMonth() &&
+    startDate.getDay() === minDate.getDay()
   ) {
     // make sure the hours can't go below the first hour
     $("#startHour").attr('min', minDate.getHours());
@@ -543,7 +543,7 @@ function updateTimes() {
 
     // if the hour is as low as possible, make sure the minutes
     // don't go below the first minute
-    if ($("#startHour").val() == minDate.getHours()) {
+    if ($("#startHour").val() === minDate.getHours()) {
       $("#startMinute").attr('min', minDate.getMinutes());
 
       if ($("#startMinute").val() < minDate.getMinutes()) {
@@ -553,7 +553,7 @@ function updateTimes() {
 
       // if the minutes is as low as possible, make sure the seconds
       // don't go below the first second
-      if ($("#startMinute").val() == minDate.getMinutes()) {
+      if ($("#startMinute").val() === minDate.getMinutes()) {
         $("#startSecond").attr('min', minDate.getSeconds());
 
         if ($("#startSecond").val() < minDate.getSeconds()) {
@@ -566,9 +566,9 @@ function updateTimes() {
 
   // if the current end date is the same as the minimum date
   if (
-    endDate.getYear() == minDate.getYear() &&
-    endDate.getMonth() == minDate.getMonth() &&
-    endDate.getDay() == minDate.getDay()
+    endDate.getYear() === minDate.getYear() &&
+    endDate.getMonth() === minDate.getMonth() &&
+    endDate.getDay() === minDate.getDay()
   ) {
     // make sure the hours can't go below the first hour
     $("#endHour").attr('min', minDate.getHours());
@@ -580,7 +580,7 @@ function updateTimes() {
 
     // if the hour is as low as possible, make sure the minutes
     // don't go below the first minute
-    if ($("#endHour").val() == minDate.getHours()) {
+    if ($("#endHour").val() === minDate.getHours()) {
       $("#endMinute").attr('min', minDate.getMinutes());
 
       if ($("#endMinute").val() < minDate.getMinutes()) {
@@ -590,7 +590,7 @@ function updateTimes() {
 
       // if the minutes is as low as possible, make sure the seconds
       // don't go below the first second
-      if ($("#endMinute").val() == minDate.getMinutes()) {
+      if ($("#endMinute").val() === minDate.getMinutes()) {
         $("#endSecond").attr('min', minDate.getSeconds());
 
         if ($("#endSecond").val() < minDate.getSeconds()) {
@@ -603,9 +603,9 @@ function updateTimes() {
 
   // if the current start date is also the current end date
   if (
-    startDate.getYear() == endDate.getYear() &&
-    startDate.getMonth() == endDate.getMonth() &&
-    startDate.getDay() == endDate.getDay()
+    startDate.getYear() === endDate.getYear() &&
+    startDate.getMonth() === endDate.getMonth() &&
+    startDate.getDay() === endDate.getDay()
   ) {
 
     // set mins and maxs for hours
@@ -614,12 +614,12 @@ function updateTimes() {
 
     // check if they're in bounds
     if ($("#startHour").val() > endDate.getHours()) {
-      $("#startHour").val(endDate.getHours())
+      $("#startHour").val(endDate.getHours());
       startDate.setHours(endDate.getHours());
     }
 
     // if starthour == endhour
-    if (startDate.getHours() == endDate.getHours()) {
+    if (startDate.getHours() === endDate.getHours()) {
       // set minutes min/max
       $("#startMinute").attr('max', endDate.getMinutes());
       $("#endMinute").attr('min', startDate.getMinutes());
@@ -631,7 +631,7 @@ function updateTimes() {
       }
 
       // if startmin == endmin
-      if (startDate.getMinutes() == endDate.getMinutes()) {
+      if (startDate.getMinutes() === endDate.getMinutes()) {
         // set seconds min/max
         $("#startSecond").attr('max', endDate.getSeconds());
         $("#endSecond").attr('min', startDate.getSeconds());
@@ -647,26 +647,29 @@ function updateTimes() {
 
   // if the end date is also the maximum possible date
   if (
-    endDate.getYear() == maxDate.getYear() &&
-    endDate.getMonth() == maxDate.getMonth() &&
-    endDate.getDay() == maxDate.getDay()
+    endDate.getYear() === maxDate.getYear() &&
+    endDate.getMonth() === maxDate.getMonth() &&
+    endDate.getDay() === maxDate.getDay()
   ) {
     // make sure the hour doesn't go over
     $("#endHour").attr('max', maxDate.getHours());
-    if ($("#endHour").val() > maxDate.getHours())
+    if ($("#endHour").val() > maxDate.getHours()) {
       $("#endHour").val(maxDate.getHours());
+    }
 
     // same for minutes
-    if ($("#endHour").val() == maxDate.getHours()) {
+    if ($("#endHour").val() === maxDate.getHours()) {
       $("#endMinute").attr('max', maxDate.getMinutes());
-      if ($("#endMinute").val() > maxDate.getMinutes())
+      if ($("#endMinute").val() > maxDate.getMinutes()) {
         $("#endMinute").val(maxDate.getMinutes());
+      }
 
       // same for seconds
-      if ($("#endMinute").val() == maxDate.getMinutes()) {
+      if ($("#endMinute").val() === maxDate.getMinutes()) {
         $("#endSecond").attr('max', maxDate.getSeconds());
-        if ($("#endSecond").val() > maxDate.getSeconds())
+        if ($("#endSecond").val() > maxDate.getSeconds()) {
           $("#endSecond").val(maxDate.getSeconds());
+        }
       }
     }
   }

@@ -4,10 +4,10 @@
 */
 
 // used to hold the scroller's interval
-var interval = null
+var interval = null;
 
 function setupStoryboardCreate() {
-  setMode("storyboard creation")
+  setMode("storyboard creation");
 
   //get any data from the url- ../playback.html?par1=1&par2=2 => {par1: 1, par2:2}
   var searchData = getSearchData();
@@ -19,10 +19,10 @@ function setupStoryboardCreate() {
   }
   
   // get all clips on the server
-  getClips()
+  getClips();
 
   // make interface pretty.
-  setupStoryboardInterface()
+  setupStoryboardInterface();
 
   // setup the bottom timeline to accept clips in a timeline-y fashion
   $("#timeline").sortable({
@@ -32,8 +32,8 @@ function setupStoryboardCreate() {
     containment: "window",
 
     // when an item it dragged out of the timeline, delete it!
-    stop: function(event, ui) { deleteItem(ui) },
-  })
+    stop: function(event, ui) { deleteItem(ui); },
+  });
 
 
   /*  timeline.sortreceive / timeline.sortout
@@ -47,7 +47,7 @@ function setupStoryboardCreate() {
   $("#timeline").on('sortreceive sortout', function(event, ui) {
     setTimelineWidth(0);
     unhoverizer();
-  })
+  });
 
 
   /*  timeline.sortover
@@ -60,7 +60,7 @@ function setupStoryboardCreate() {
   $("#timeline").on('sortover', function(event, ui) {
     setTimelineWidth(0);
     hoverizer();
-  })
+  });
   
 
   /*  clearStoryboard.click
@@ -68,10 +68,10 @@ function setupStoryboardCreate() {
       everything from the timeline, by calling empty().
   */
   $("#clearStoryboard").click(function(event) {
-    event.preventDefault()
-    $("#timeline").empty()
-    setTimelineWidth(0)
-  })
+    event.preventDefault();
+    $("#timeline").empty();
+    setTimelineWidth(0);
+  });
 
 
   /*  submitStoryboard.click
@@ -79,9 +79,9 @@ function setupStoryboardCreate() {
       submit our storyboard to the server.
   */
   $("#submitStoryboard").click(function(event) {
-    event.preventDefault()
-    submitStoryboard()
-  })
+    event.preventDefault();
+    submitStoryboard();
+  });
 
 
   /*  storyboardDropdown.click
@@ -89,16 +89,16 @@ function setupStoryboardCreate() {
       description box's visibility.
   */
   $("#storyboardDropdown").click(function(event) {
-    event.preventDefault()
-    toggleDescription()
-  })
+    event.preventDefault();
+    toggleDescription();
+  });
 }
 
 
 // when we resize the window, resetup the widths and heights of things.
 $(window).resize(function() {
   setupStoryboardInterface();
-})
+});
 
 
 /*  setup storyboard interface
@@ -108,7 +108,7 @@ $(window).resize(function() {
     height of the window, less the header.
 */
 function setupStoryboardInterface() {
-  $("#storyboard").height($(window).height() - 10 - $("header").outerHeight())
+  $("#storyboard").height($(window).height() - 10 - $("header").outerHeight());
 }
 
 
@@ -147,24 +147,26 @@ function getClips() {
         class: 'clip',
         id:     clipJSON.ID,
         clipID: clipJSON.ID,
-      }).html(
+      });
+      div.html(
         "<h2>" + clipJSON.name + "</h2>\n" +
         "<p>" + clipJSON.description + "</p>"
-      )
+      );
 
 
       var button = $("<button/>", {}).append(
         $("<img/>", {src: "/img/x.svg"})
-      ).click(function(event) {
-        event.preventDefault()
+      );
+      button.click(function(event) {
+        event.preventDefault();
 
         $.get("/clip/delete/" + clipJSON.ID + "/sessionID/" + getPlaybackSessionId(), function(data) {
-         $('.clip[clipid=' + clipJSON.ID + ']').fadeRemove()
-        })
-      }).prependTo(div)
+         $('.clip[clipid=' + clipJSON.ID + ']').fadeRemove();
+        });
+      }).prependTo(div);
 
       // add the div to the clips area
-      div.appendTo('#clips')
+      div.appendTo('#clips');
 
       // setup the clip to be draggable, and dropable in the timeline
       div.draggable({
@@ -176,9 +178,9 @@ function getClips() {
         containment: 'window',
         cursor: "move",
         opacity: 0.75,
-      })
-    })
-  })
+      });
+    });
+  });
 }
 
 
@@ -190,13 +192,14 @@ function getClips() {
     width of the timeline based on the number of items inside of it.
 */
 function setTimelineWidth(extra) {
-  var timeline = $("#timeline")
-  var bottom = $("#timelineNcommands")
+  var timeline = $("#timeline");
+  var bottom = $("#timelineNcommands");
 
-  if (bottom.width() < (timeline.sortable('toArray').length * 220) + extra)
-    timeline.width((timeline.sortable('toArray').length * 220) + extra + "px")
-  else
+  if (bottom.width() < (timeline.sortable('toArray').length * 220) + extra) {
+    timeline.width((timeline.sortable('toArray').length * 220) + extra + "px");
+  } else {
     timeline.width(bottom.width() - 10);  // 10 = border
+  }
 }
 
 
@@ -210,8 +213,8 @@ function submitStoryboard() {
 /*
   // If the user hasn't logged in yet, we kindly request they login
   if (!login.loggedIn) {
-    $("#loginbox").data('function', 'submitStoryboard')
-    $("#loginbox").dialog('open')
+    $("#loginbox").data('function', 'submitStoryboard');
+    $("#loginbox").dialog('open');
 
     // break out. We'll be back because of the loginbox's calling mechanism
     return;
@@ -221,23 +224,24 @@ function submitStoryboard() {
   // if the description area is hidden, and it doesn't have any contents,
   // open it up and prompt the user to add a description.
   
-//  if (!$("#description").is(":visible") && $("#storyboardDescription").val() == "") {
-//    toggleDescription()
+//  if (!$("#description").is(":visible") && $("#storyboardDescription").val() === "") {
+//    toggleDescription();
 //    // determine focus based on if the user has set a title already
 //    // if they have, choose the description, if they haven't, the title
-//    if ($("#storyboardTitle").val() == "")
-//      $("#storyboardTitle").focus()
-//    else 
-//      $("#storyboardDescription").focus()
+//    if ($("#storyboardTitle").val() === "") {
+//      $("#storyboardTitle").focus();
+//    } else {
+//      $("#storyboardDescription").focus();
+//    }
 //    // break out, we don't want to submit a storyboard without a title
-//    return
+//    return;
 //  }
 
   // check that a title has been set
   // now 10% more idiot proof.
-  if ($("#storyboardTitle").val().trim() == "") {
-    $("#storyboardTitle").focus()
-    return
+  if ($("#storyboardTitle").val().trim() === "") {
+    $("#storyboardTitle").focus();
+    return;
   }
 
   /*
@@ -252,18 +256,18 @@ function submitStoryboard() {
     }
   */
 
-  var clips = []
+  var clips = [];
   $("#timeline .clip").each(function(i, clip) {
-    clips.push($(clip).attr('clipid'))
-  })
+    clips.push($(clip).attr('clipid'));
+  });
   
   var storyboard = {
     //playbackSessionID: sessionID,
     //developerGroupID: login.group,
     name: $("#storyboardTitle").val(),
     description: $("#storyboardDescription").val(),
-    clips: clips
-  }
+    clips: clips,
+  };
 
   $.post('/storyboard/new/sessionID/' + getPlaybackSessionId(), 
     { storyboard: JSON.stringify(storyboard) }, 
@@ -274,8 +278,8 @@ function submitStoryboard() {
      window.location = "playback.html?storyboardID=" + data.storyboardID + "&sessionID=" + getPlaybackSessionId();
     }
   ).fail(function() {
-    console.log(storyboard)
-  })
+    console.log(storyboard);
+  });
 }
 
 
@@ -290,30 +294,30 @@ function toggleDescription() {
   if ($("#description").is(":visible")) {
 
     // actually hide the description
-    $("#description").hide()
+    $("#description").hide();
 
     // reset the height and margin of the left section of timeline commands
-    $("#timelineCommands .left").height(50).css({"margin-top": -5})
+    $("#timelineCommands .left").height(50).css({"margin-top": -5});
 
     // rotate the dropdown icon to be pointed downwards
     $("#storyboardDropdown").css({
       "-moz-transform":     "rotate(0deg)",
       "-webkit-transform":  "rotate(0deg)",
       "transform":          "rotate(0deg)",
-    })
+    });
 
     // remove the border from the title input
-    $("#storyboardTitle").attr('class', '')
+    $("#storyboardTitle").attr('class', '');
   }
 
   // if the description area is hidden, show it
   else {
 
     // show the description
-    $("#description").show()
+    $("#description").show();
 
     // give the text area a nice height
-    $("#storyboardDescription").height(200)
+    $("#storyboardDescription").height(200);
 
     // set the height of the left section of timeline commands, 
     // making it big enough to hold the title and description boxes
@@ -325,17 +329,17 @@ function toggleDescription() {
     // style it to 'pop up'
     .css({
       "margin-top": 45 - $("#timelineCommands .left").height(),
-    })
+    });
 
     // rotate the dropdown arrow to face up
     $("#storyboardDropdown").css({
       "-moz-transform":     "rotate(180deg)",
       "-webkit-transform":  "rotate(180deg)",
       "transform":          "rotate(180deg)",
-    })
+    });
 
     // add an underline to the title input
-    $("#storyboardTitle").attr('class', 'border')
+    $("#storyboardTitle").attr('class', 'border');
   }
 }
 
@@ -376,12 +380,12 @@ function deleteItem(ui) {
       // we want the item removed, because if we don't
       // remove it, it stays in the timeline, just hidden
       function() {
-        $(ui.item[0]).remove()
+        $(ui.item[0]).remove();
       }
     );
 
     // reset the timeline's width
-    setTimelineWidth(-220)
+    setTimelineWidth(-220);
   }
 }
 
@@ -397,20 +401,21 @@ function deleteItem(ui) {
 function hoverizer() {
   // we don't need them if the timeline isn't wider than the 
   // area containing it.
-  if ($("#timeline").width() < $("#timelineNcommands").width())
+  if ($("#timeline").width() < $("#timelineNcommands").width()) {
     return;
+  }
 
   // create the left hover zone
   var leftHover = $("<div/>", {
     class: "hoverizer",
     id: "left-hover",
-  })
+  });
 
   // and the right hover zone
   var rightHover = $("<div/>", {
     class: "hoverizer",
     id: "right-hover",
-  })
+  });
 
   // add them to the page
   leftHover.appendTo('body');
@@ -418,25 +423,25 @@ function hoverizer() {
 
   // setup the left zone to scroll left when you hover on it.
   leftHover.on('mouseenter', function(event) {
-    clearInterval(interval)
+    clearInterval(interval);
     interval = setInterval(function() {
-      $("#timelineHolder").stop().scrollTo({top: 0, left: '-=10'}, 10)
-    }, 10)
+      $("#timelineHolder").stop().scrollTo({top: 0, left: '-=10'}, 10);
+    }, 10);
   }).on('mouseleave', function(event) {
     // when you stop hovering, stop scrolling.
-    clearInterval(interval)
-  })
+    clearInterval(interval);
+  });
 
 
   // same for the right.
   rightHover.on('mouseenter', function(event) {
-    clearInterval(interval)
+    clearInterval(interval);
     interval = setInterval(function() {
-      $("#timelineHolder").stop().scrollTo({top: 0, left: '+=10'}, 10)
-    }, 10)
+      $("#timelineHolder").stop().scrollTo({top: 0, left: '+=10'}, 10);
+    }, 10);
   }).on('mouseleave', function(event) {
-    clearInterval(interval)
-  })
+    clearInterval(interval);
+  });
 }
 
 
@@ -445,6 +450,7 @@ function hoverizer() {
     when you're not dragging things.
 */
 function unhoverizer() {
-  clearInterval(interval)
-  $(".hoverizer").remove()
+  clearInterval(interval);
+  $(".hoverizer").remove();
 }
+

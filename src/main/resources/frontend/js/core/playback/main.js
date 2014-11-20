@@ -51,8 +51,10 @@ var playback = {
   speed: 100,         // speed of playback in ms
   fontSize: 14,       // font size for playback documents
   orderOfEvents: [],  // all events, in order of occurrence 
+
   //TODO when we have time to do it right, change the name of this to relevantEventIndexValues 
-  relevantEvents: [], // position of relevant events in orderOfEvents (used for playback slider) //all relevant event IDs, in order of occurrence
+  relevantEvents: [], // position of relevant events in orderOfEvents
+                      // (used for playback slider) in order of occurrence
   eventsWithCommentsIndexValues: [], //holds the index in orderOfEvents where there are comments
   playing: false,     // if we"re currently paused or playing (paused = false)
   position: 0,        // the current position in the playback
@@ -85,11 +87,11 @@ function setupPlayback() {
     //only called if held down (because of the timeout),
     //attaches an interval id to the button, which calls stepBackward
     //every `playback.speed` ms
-    $(this).data("timeout", setInterval("stepBackward(1)", playback.speed));
+    $(this).data("timeout", setInterval(function() { stepBackward(1); }, playback.speed));
   }).bind("mouseup mouseleave", function() {
     //stops the above interval
     clearInterval($(this).data("timeout"));
-  })
+  });
 
   //same as the back seek button, but for the forward seek button
   $("#stepForward").mousedown(function() {
@@ -103,11 +105,11 @@ function setupPlayback() {
 
     //only called if held down, attaches an interval id to the button,
     //which calls stepForward every `playback.speed` ms
-    $(this).data("timeout", setInterval("stepForward(1)", playback.speed));
+    $(this).data("timeout", setInterval(function() { stepForward(1); }, playback.speed));
   }).bind("mouseup mouseleave", function() {
     //stops the above interval
     clearInterval($(this).data("timeout"));
-  })
+  });
 
 
   //setup the tab area for playback documents
@@ -116,11 +118,12 @@ function setupPlayback() {
     hide:         false,  //is this hidden? NO
     active:       1,      //which tab are we starting with? 1
     activate:     function(event, ui) {
-                    if(playback.playing && playback.documentID != '') 
+                    if(playback.playing && playback.documentID !== '') {
                       pause();
+                    }
                     playback.documentID = ui.newPanel[0].id;                  
                   } //when tabs are clicked
-  })
+  });
 
   //get any data from the url- ../playback.html?par1=1&par2=2 => {par1: 1, par2:2}
   var searchData = getSearchData();
@@ -202,7 +205,7 @@ function setupPlayback() {
 
 
   //create a clear event, with the ID of CLEAR
-  events["CLEAR"] = {
+  events.CLEAR = {
     ID:               "CLEAR",
     type:             "CLEAR",
     developerGroupID: null,
@@ -228,7 +231,7 @@ function getSelectedTextFilterInfo(sID) {
 //when we resize the window, adjust the sizes of our elements
 $(window).resize(function() {
   setupPlaybackInterface();
-})
+});
 
 
 /*  setup playback interface
@@ -291,21 +294,20 @@ function playPause() {
 */
 function play() {
   //stop the timers pushing playback
-  clearInterval($("#stepForward").data("timeout"))
-  clearInterval($("#stepBackward").data("timeout"))
+  clearInterval($("#stepForward").data("timeout"));
+  clearInterval($("#stepBackward").data("timeout"));
   
   //if we are paused
-  if(!playback.playing)
-  {
+  if (!playback.playing) {
     //indicate we are playing 
     playback.playing = true;
     
     //set the time to automatically play at speed slider speed
-    playback.player = setInterval("stepForward(1)", playback.speed)
+    playback.player = setInterval(function() { stepForward(1); }, playback.speed);
  
     //toggle the buttons
-    $("#pauseIcon").show()
-    $("#playIcon").hide()
+    $("#pauseIcon").show();
+    $("#playIcon").hide();
   }
 }
 
@@ -318,8 +320,7 @@ function pause() {
   clearInterval($("#stepBackward").data("timeout"));
   
   //if we are playing 
-  if(playback.playing)
-  {
+  if (playback.playing) {
     //indicate we are not playing anymore (paused)
     playback.playing = false;
     //stop the timer to auto play
@@ -336,32 +337,32 @@ function pause() {
 */
 function clearEverything() {
   //clear out the main object of events
-  events = {}
+  events = {};
   
   //clear out the event grabber
-  eventGrabber.done = false
-  eventGrabber.currentIndex = 0
+  eventGrabber.done = false;
+  eventGrabber.currentIndex = 0;
   
   //clear out the event ids and relevant event positions
-  playback.orderOfEvents = []
-  playback.relevantEvents = []
+  playback.orderOfEvents = [];
+  playback.relevantEvents = [];
 
   //clear out the playback location slider
-  $("#locationSlider").slider("option", "value", 0)
-  $("#locationSlider").slider("option", "max", 0)
+  $("#locationSlider").slider("option", "value", 0);
+  $("#locationSlider").slider("option", "max", 0);
 
   //clear out the documents 
   $("#documents").html(
     "<ul id='documentTabs'></ul>\n" +
     "<div id='developerPictures'></div>"
-  )
+  );
 
   //clear out the documents tabs
   $("#documentTabs").tabs({
     collapsible: false,
     hide: false,
     active: 1,
-  })
+  });
 }
 
 /*  change dev group
@@ -370,7 +371,7 @@ function clearEverything() {
 function changeDevGroup(currentDevGroup) {
   //if the passed in developer group is NOT the same as the current dev group 
   if($("#developerPictures").data("group") === undefined || 
-     $("#developerPictures").data("group") != currentDevGroup ) {
+     $("#developerPictures").data("group") !== currentDevGroup ) {
     
     //search the dev groups for the passed in dev group
     //old
@@ -378,12 +379,8 @@ function changeDevGroup(currentDevGroup) {
     //new
     //go through each of the developer groups
     $.each(developerGroups, function(devGroupId, devGroup) {
-      //old
-      //if the dev group was found
-      //if(currentDevGroup == developerGroups[i].developerGroupID) {
-      //new
       //if we have found the current dev group 
-      if(currentDevGroup == devGroupId) {
+      if (currentDevGroup === devGroupId) {
       
         //store the dev group id
         $("#developerPictures").data("group", currentDevGroup);
@@ -391,21 +388,17 @@ function changeDevGroup(currentDevGroup) {
         //clear out the div
         $("#developerPictures").html("");
         
-        //old
-        //for each developer in the dev group add the dev info
-        //$.each(developerGroups[i].developers, function(i, devID) {
-        //new
         //for each of the developers in the dev group
         $.each(devGroup.developers, function(i, devID) {
-            //create a picture of the dev
-            $("<img/>", {
+          //create a picture of the dev
+          $("<img/>", {
             class: "devPicture",
             src: developers[devID].gravatar,
             title: developers[devID].firstName + " " + developers[devID].lastName + " (" + developers[devID].email + ")",
-          }).appendTo("#developerPictures")
-        })      
-      } 
-    })
+          }).appendTo("#developerPictures");
+        });     
+      }
+    });
   }
 }
 
@@ -415,7 +408,7 @@ function changeDevGroup(currentDevGroup) {
 */
 function findEvent(eventID, clipNumber) {
   //index of event in playback.orderOfEvents 
-  var index = 0
+  var index = 0;
 
   //go through all the events until we come to the correct clip
   while(playback.orderOfEvents[index].clipNumber < clipNumber) {

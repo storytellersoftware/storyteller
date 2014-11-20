@@ -45,7 +45,7 @@ function setupSpeed() {
     */
     stop: function(event, ui) {
       //check if the mouse has unclicked outside of the speedHolder
-      if ($("#speedHolder").has($(event.toElement)).length == 0) {
+      if ($("#speedHolder").has($(event.toElement)).length === 0) {
         //create the timeout function to hide the speed slider
         $("#speedHolder").data("leaveTimeout", setTimeout(hideSpeedSlider, 1500));
       }
@@ -96,7 +96,7 @@ function setupSpeed() {
   //the speedHolder
   $("#speed").mouseenter(function() {
     clearTimeout($("#speedHolder").data("leaveTimeout"));
-  })
+  });
 }
 
 /*  set up speed slider
@@ -152,7 +152,7 @@ function showSpeedTooltip() {
     top: top,
   });
 
-  $("#speedSlider").data('timeout', setTimeout(function() { $("#speed-tool").remove() }, 1000));
+  $("#speedSlider").data('timeout', setTimeout(function() { $("#speed-tool").remove(); }, 1000));
 }
 
 /*  change speed
@@ -173,7 +173,7 @@ function changeSpeed(percent) {
   else {
     setPlaybackAnimations(true);
   }
-  	
+
   //if the user changes speed while in a playback 
   if (playback.playing) {
     //pause and restart so the new speed takes
@@ -196,8 +196,7 @@ function setPlaybackAnimations(animate) {
   if (animate) {
     $("#animationsOffImg").hide();
     $("#animationsOnImg").show();
-  }
-  else {
+  } else {
     $("#animationsOnImg").hide();
     $("#animationsOffImg").show();
   }
@@ -206,3 +205,4 @@ function setPlaybackAnimations(animate) {
 function toggleAnimations() {
   setPlaybackAnimations(!playback.animate);
 }
+

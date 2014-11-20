@@ -1,4 +1,3 @@
-
 /*
     playback/MOVEMENT.js
     All things related to moving around in a playback. It's separate
@@ -34,7 +33,9 @@ function setupMovement() {
 */
 function step(position, animate) {
   //if we're playing, pause
-  if (playback.playing) playPause();
+  if (playback.playing) {
+    playPause();
+  }
 
   //determine if we are moving forward based on where we are and where we'd like to go
   var isForward = playback.position < position;
@@ -59,38 +60,13 @@ function step(position, animate) {
     Move forward a specified number of steps.
 */  
 function stepForward(steps, animate) {
-  //clear out any highlight from a clip comment
-  $(".highlight").removeClass("highlight");
+  var i;
 
-  //if the user wants to skip animation 
-  if(playback.animate == false) {
-    //if this is a filtered or selected text playback
-    if(playback.type == 'filtered' || playback.type == 'selection') {
-      //set the number of steps to a very large value to jump to the end
-      steps = Number.MAX_VALUE;      
-    }    
-    //if this is a clip or storyboard playback
-    else if(playback.type == 'clip' || playback.type == 'storyboard') {      
-      //go through all the index values where there is a comment
-      for(var i = 0; i < playback.eventsWithCommentsIndexValues.length;i++) {
-        //if we find a comment index beyond the current position
-        if(playback.eventsWithCommentsIndexValues[i] > playback.position) {
-          //calculate how many steps it will take to get there
-          steps = playback.eventsWithCommentsIndexValues[i] - playback.position + 1; 
-          break;
-        }
-      }
-    }    
-    
-    //indicate there should be no animation
-    animate = false;
-  }
-  
   //helpers...
   //MM- not sure if I like these
   function isRelevant() {
     //based on the playback position get the event from orderOfEvents and see if its relevant
-    return playback.orderOfEvents[playback.position]['relevant'];
+    return playback.orderOfEvents[playback.position].relevant;
   }
 
   function currentEvent() {
@@ -103,11 +79,39 @@ function stepForward(steps, animate) {
     return playback.position >= playback.orderOfEvents.length;
   }
 
+  //clear out any highlight from a clip comment
+  $(".highlight").removeClass("highlight");
+
+  //if the user wants to skip animation 
+  if (playback.animate === false) {
+    //if this is a filtered or selected text playback
+    if (playback.type === 'filtered' || playback.type === 'selection') {
+      //set the number of steps to a very large value to jump to the end
+      steps = Number.MAX_VALUE;      
+    }    
+    //if this is a clip or storyboard playback
+    else if (playback.type === 'clip' || playback.type === 'storyboard') {
+      //go through all the index values where there is a comment
+      for (i = 0; i < playback.eventsWithCommentsIndexValues.length; i++) {
+        //if we find a comment index beyond the current position
+        if (playback.eventsWithCommentsIndexValues[i] > playback.position) {
+          //calculate how many steps it will take to get there
+          steps = playback.eventsWithCommentsIndexValues[i] - playback.position + 1; 
+          break;
+        }
+      }
+    }    
+    
+    //indicate there should be no animation
+    animate = false;
+  }
+  
+
   //default to animated
   if (animate === undefined) animate = true;
 
   //for each of the desired steps
-  for (var i = 0; i < steps; i++) {
+  for (i = 0; i < steps; i++) {
     //step forward (if we've reached the end of the playback, return)
     if (!doStepForward(animate)) break;
     
@@ -118,7 +122,7 @@ function stepForward(steps, animate) {
     }
     
     //if this is the last event
-    if(lastEvent()) {
+    if (lastEvent()) {
       //move the slider to the end
       $("#locationSlider").slider('value', playback.relevantEvents.length - 1);
     }
@@ -129,7 +133,7 @@ function stepForward(steps, animate) {
     
       // Display the timestamp as long as the event is not undefined 
       // (This only happens at the end)
-      if(currentEvent() !== undefined ) {
+      if (currentEvent() !== undefined ) {
         //display the time stamp
         $("#timestamp").text(dateFormat(new Date(currentEvent().timestamp)));
 
@@ -215,17 +219,17 @@ function stepBackward(steps, animate) {
   //MM- not sure if I like these
   function isRelevant() {
     //based on the playback position get the event from orderOfEvents and see if its relevant
-    return playback.orderOfEvents[playback.position]['relevant']
+    return playback.orderOfEvents[playback.position].relevant;
   }
 
   function currentEvent() {
     //based on the playback position get the event from orderOfEvents and get the full event from events
-    return events[playback.orderOfEvents[playback.position].eventID]
+    return events[playback.orderOfEvents[playback.position].eventID];
   }
 
   function firstEvent() {
     //if the playback position is at 0 (or below) we are at the beginning
-    return playback.position <= 0
+    return playback.position <= 0;
   }
 
   //if we're currently playing, pause (we'll start playing again at the end). 
@@ -235,19 +239,27 @@ function stepBackward(steps, animate) {
   }
 
   //if we're at the beginning there is no where else to go
-  if(playback.position == 0) return;
+  if (playback.position === 0) {
+    return;
+  }
 
   //default to animated
-  if (animate === undefined) animate = true;
+  if (animate === undefined) {
+    animate = true;
+  }
 
   //for all the desired steps
   for (var i = 0; i < steps; i++) {
     //if we've reached the beginning, stop moving
-    if (!doStepBackward(animate)) break;
+    if (!doStepBackward(animate)) {
+      break;
+    }
 
     //if our current event isn't relevant, keep moving backwards
     while (!firstEvent() && !isRelevant()) {
-      if (!doStepBackward (animate)) break;
+      if (!doStepBackward (animate)) {
+        break;
+      }
 
       //keep track of all the steps we are taking for irrelevant events
       i++;
@@ -258,7 +270,7 @@ function stepBackward(steps, animate) {
 
     //Display the timestamp as long as the event is not undefined 
     //(This only happens at the end)
-    if(currentEvent() !== undefined) {
+    if (currentEvent() !== undefined) {
       //display the time of the event
       $("#timestamp").text(dateFormat(new Date(currentEvent().timestamp)));
       
@@ -289,7 +301,7 @@ function doStepBackward(animate) {
   }
 
   //if we are at the beginning
-  if (playback.position == 0) {
+  if (playback.position === 0) {
     //indicate there is no where else to go
     return false;
   }
@@ -360,11 +372,11 @@ function insert(orderEvent, forwards, animate) {
   }
 
   //IDs of the element in the DOM and the document it's inside of
-  var domID = orderEvent.clipNumber + "-" + event.ID
-  var docID = orderEvent.clipNumber + "-" + event.documentID
+  var domID = orderEvent.clipNumber + "-" + event.ID;
+  var docID = orderEvent.clipNumber + "-" + event.documentID;
 
   //the item immediately preceeding, as in, where this is going after
-  var previousNeighbor = orderEvent.clipNumber + "-" + event.previousNeighborID
+  var previousNeighbor = orderEvent.clipNumber + "-" + event.previousNeighborID;
 
   //check if the current document is active, if not then change it
   if(playback.documentID != docID) {
@@ -381,7 +393,7 @@ function insert(orderEvent, forwards, animate) {
   //determine where it goes
   
   //*should* only happen for the first event in a document
-  if ($("#" + previousNeighbor).length == 0) {
+  if ($("#" + previousNeighbor).length === 0) {
     //add the first insert event
     span.prependTo("#pre-" + docID);
   } 
@@ -399,7 +411,7 @@ function insert(orderEvent, forwards, animate) {
 
   //if the insert event will get deleted in this playback
   //TODO make this an option in the filter menu??
-  if (event.deletedAtTimestamp != 0) {
+  if (event.deletedAtTimestamp !== 0) {
     //add a class so that it can be shown in the playback
     span.addClass("deleted-insert");
   }
@@ -492,9 +504,9 @@ function createDocument(orderEvent, animate) {
   }).text(ev.newName);
   
   //the actual tab, in which the above anchor goes into
-  $("<li/>", {id: "li-" + docID, class: 'clip-' + orderEvent.clipNumber})
-    .append(link)
-    .appendTo($("#documentTabs"));
+  var item = $("<li/>", {id: "li-" + docID, class: 'clip-' + orderEvent.clipNumber});
+  item.append(link);
+  item.appendTo($("#documentTabs"));
  
   //create a div to hold the doc
   var doc = $("<div/>", { id: docID, class: "documentDiv clip-" + orderEvent.clipNumber });
@@ -570,7 +582,7 @@ function showClip(orderEvent) {
   slides current document in and flashes it
 */
 function changeDocument(documentID, animate){
-  if(animate && playback.playing && playback.documentID != '') {
+  if (animate && playback.playing && playback.documentID !== '') {
     //normal: 200 fastest: 5 slowest: 505
     var speed = playback.speed * 5.5;
     
@@ -580,14 +592,14 @@ function changeDocument(documentID, animate){
     //display a change in the tabs
     $('#' + playback.documentID).hide("highlight",{color:"lightgreen"},1000);
     $('#' + documentID).show("slide", speed, function() {
-      setTimeout(speed, play()) //wait for the slide to be done, then play      
+      setTimeout(speed, play()); //wait for the slide to be done, then play
     });
     
     //store the current document
     playback.documentID = documentID;
-  }
-  else {
+  } else {
     //simulate a lick on the document (non-animated)
     $("#tab-" + documentID).trigger('click');
   }
 }
+

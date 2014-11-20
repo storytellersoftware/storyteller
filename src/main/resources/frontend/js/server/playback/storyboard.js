@@ -45,7 +45,7 @@ function getStoryboardEvents() {
 
     // get the first clip's events
     getNextClip();
-  })
+  });
 }
 
 
@@ -61,13 +61,14 @@ function getNextClip() {
   // check to make sure we're not going out of bounds
   if (eventGrabber.clipNumber >= storyboard.clips.length) {
     //if we're at the end, remove the last CLEAR event
-    if(playback.orderOfEvents[playback.orderOfEvents.length - 1].eventID == "CLEAR") {
+    if(playback.orderOfEvents[playback.orderOfEvents.length - 1].eventID === "CLEAR") {
       playback.orderOfEvents.splice(playback.orderOfEvents.length - 1, 1);
     }
     /*
     // make sure we don't have an extra CLEAR event at the end of the playback
-    if (eventFilters.eventsToFilter[eventFilters.eventsToFilter.length - 1].eventID == "CLEAR")
-      eventFilters.eventsToFilter.splice(eventFilters.eventsToFilter.length - 1)
+    if (eventFilters.eventsToFilter[eventFilters.eventsToFilter.length - 1].eventID == "CLEAR") {
+      eventFilters.eventsToFilter.splice(eventFilters.eventsToFilter.length - 1);
+    }
     */
     
     // Make the export button look clickable and function now that our events are all here
@@ -108,3 +109,4 @@ function exportStoryboard() {
     window.location = "/" + data;
   });
 }
+

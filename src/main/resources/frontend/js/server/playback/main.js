@@ -146,26 +146,26 @@ function grabEvents() {
       //are no more events and we are done retrieving data from the server.
       if (data.length < eventGrabber.blockSize) {
         //stop the polling 
-        clearInterval(eventGrabber.poller)
-        delete eventGrabber.poller
+        clearInterval(eventGrabber.poller);
+        delete eventGrabber.poller;
         eventGrabber.poller = null;
         
         //set the end time
-        eventGrabber.endTime = Date.now()
+        eventGrabber.endTime = Date.now();
         
         //indicate we are done
-        eventGrabber.done = true
+        eventGrabber.done = true;
       }
 
       // increment the current index
-      eventGrabber.currentIndex += eventGrabber.blockSize
+      eventGrabber.currentIndex += eventGrabber.blockSize;
       
 
       // add every event we got back from the server to
       // the events object, and to the list of events to be filtered
       $.each(data, function(i, ev) {
         //store the event in a map based on its id
-        events[ev.ID] = ev
+        events[ev.ID] = ev;
         
         //add the clip number to the event
         ev.clipNumber = eventGrabber.clipNumber;
@@ -177,23 +177,23 @@ function grabEvents() {
         eventFilters.eventsToFilter.push({
           eventID: ev.ID,
           clipNumber: eventGrabber.clipNumber,
-        })
+        });
         */
-      })
+      });
       
       /*
       // kick off filterEvents if it's the first event
       if (startIndex == 0) {
-        eventFilters.startTime = Date.now()
-        eventFilters.poller = setInterval(filterEvents, 1)
+        eventFilters.startTime = Date.now();
+        eventFilters.poller = setInterval(filterEvents, 1);
       }
       */
 
       // we"re done now, so we don't need to block any more
-      eventGrabber.blocking = false
+      eventGrabber.blocking = false;
 
       if (eventGrabber.done) {
-        if (playback.type == "storyboard") {// && eventGrabber.clipNumber < storyboard.clips.length) {
+        if (playback.type === "storyboard") {// && eventGrabber.clipNumber < storyboard.clips.length) {
           // insert clip clear event
           addEventToPlayback({
             eventID: "CLEAR",
@@ -207,11 +207,11 @@ function grabEvents() {
           })
           */
           
-          eventGrabber.clipNumber++
-          getNextClip()
+          eventGrabber.clipNumber++;
+          getNextClip();
         }
         //if this is a regular playback where the user just wants to see the end result
-        else if(playback.type == "filtered" && filterMenu.showOnlyEndResult == true) {
+        else if(playback.type === "filtered" && filterMenu.showOnlyEndResult === true) {
           //TODO figure out a way to remove these ui elements or reenable them when someone alters the filters 
           //disable the useless motion controls
           //$("#movement :input").prop('disabled', true);
@@ -230,27 +230,28 @@ function grabEvents() {
     // happened, we let the user know, and ask if they want
     // to try again.
     if (eventGrabber.blockSize == 100) {
-      clearTimeout(eventGrabber.poller)
-      delete eventGrabber.poller
+      clearTimeout(eventGrabber.poller);
+      delete eventGrabber.poller;
       eventGrabber.poller = null;
 
       var tryagain = confirm(
         "The server encountered an extra fatal error, " +
         "something really bad happened. Try again?");
 
-      if (tryagain)
-        location.reload()
+      if (tryagain) {
+        location.reload();
+      }
     }
 
     // adjust things, try again.
-    eventGrabber.blockSize -= 100
-    eventGrabber.blocking = false
-  })
+    eventGrabber.blockSize -= 100;
+    eventGrabber.blocking = false;
+  });
 }
 
 function addEventToPlayback(currentEvent) {  
   //add this event to the orderOfEvents array
-  playback.orderOfEvents.push(currentEvent)
+  playback.orderOfEvents.push(currentEvent);
 
   //is this a playback that might have a comment
   if (playback.type == "storyboard" || playback.type == "clip") {
@@ -258,7 +259,7 @@ function addEventToPlayback(currentEvent) {
     currentEvent = checkEventForComments(currentEvent);
     
     //if there is now a comment id in the object
-    if("commentID" in currentEvent) {
+    if ("commentID" in currentEvent) {
       //store the index of this event in the array of events that have comments
       playback.eventsWithCommentsIndexValues.push(playback.orderOfEvents.length - 1);
     }
@@ -270,8 +271,8 @@ function addEventToPlayback(currentEvent) {
   // location slider, because we don't want to let people click on a 
   // segment of irrelevant events and screw everything up.
   if (currentEvent.relevant) {
-    playback.relevantEvents.push(playback.orderOfEvents.length - 1)
-    $("#locationSlider").slider('option', 'max', playback.relevantEvents.length - 1)
+    playback.relevantEvents.push(playback.orderOfEvents.length - 1);
+    $("#locationSlider").slider('option', 'max', playback.relevantEvents.length - 1);
   }
 }
 
@@ -281,16 +282,16 @@ function addEventToPlayback(currentEvent) {
 */
 function setupPlaybackRightclickMenu() {
   //TODO make this for selected text playback too
-  if (playback.type == "filtered" || playback.type == "selection") {
+  if (playback.type === "filtered" || playback.type === "selection") {
     createMenu("playbackArea");
 
-    var clipItem = $("<a/>", { href: "#", onclick: "clipCreate()" })
+    var clipItem = $("<a/>", { href: "#", onclick: "clipCreate()" });
     clipItem.text("Create clip");
-    addMenuItem("playbackArea", clipItem)
+    addMenuItem("playbackArea", clipItem);
 
-    var playbackSelection = $("<a/>", {href:"#", onclick: "getEventsWithSelection()"})
-    playbackSelection.text("Playback Selection")
-    addMenuItem("playbackArea", playbackSelection)
+    var playbackSelection = $("<a/>", {href:"#", onclick: "getEventsWithSelection()"});
+    playbackSelection.text("Playback Selection");
+    addMenuItem("playbackArea", playbackSelection);
 
     // We do not currently have a way to display the results for this
     /* var selectionItem = $("<a/>", {href: "#", onclick: "getStoryboardsWithSelection()"})
@@ -304,6 +305,6 @@ function getStoryboardsWithSelection() {
     {eventIDs: JSON.stringify(getSelectedElements())},
     function(data) {
       // This isn't a thing yet.
-      console.log(data)
-  })
+      console.log(data);
+  });
 }
