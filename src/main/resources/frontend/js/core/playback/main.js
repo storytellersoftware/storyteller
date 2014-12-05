@@ -45,11 +45,11 @@
 
 // object of ALL events, keyed to an event's ID
 var events = {
-  CLEAR: {
-    ID:               "CLEAR",
-    type:             "CLEAR",
-    developerGroupID: null,
-  }
+	CLEAR: {
+		ID:               "CLEAR",
+		type:             "CLEAR",
+		developerGroupID: null,
+	}
 };
 
 // holds metadata about the playback
@@ -72,10 +72,10 @@ var playback = {
 
 
 function setupPlayback() {
-	//retrieve settings from localstorage
+	// retrieve settings from localstorage
 	getSavedSettings();
 
-	//set the font size of the playback documents
+	// set the font size of the playback documents
 	changeFontSize(playback.fontSize);
 
 	(function() {
@@ -129,9 +129,10 @@ function setupPlayback() {
 
 	//setup the tab area for playback documents
 	$("#documents").tabs({
-		collapsible:  false,  //can we collapse the tabs? NO
-		hide:         false,  //is this hidden? NO
-		active:       1,      //which tab are we starting with? 1
+		collapsible: false, // don't permit tabs to be collapsed
+		hide: false,        // don't hide tabs
+		active: 1,          // start with tab 1
+
 		activate:     function(event, ui) {
 			// Called when tabs are clicked
 			if(playback.playing && playback.documentID !== '') {
@@ -146,102 +147,94 @@ function setupPlayback() {
 	//      => {parameter1: 1, parameter2: 2}
 	var searchData = getSearchData();
 
-	//if there's a storyboardID param, we're playing back a storyboard
+	// if there's a storyboardID param, we're playing back a storyboard
 	if ('storyboardID' in searchData) {
-		//set the playback type
+		// set the playback type
 		playback.type = 'storyboard';
 
-		//store the id of the storyboard to playback
+		// store the id of the storyboard to playback
 		storyboard.storyboardID = searchData.storyboardID;
 
-		//if there is a session id in the url
+		// if there is a session id in the url
 		if ('sessionID' in searchData) {
 			setPlaybackSessionId(searchData.sessionID);
 		}
 
-		//TODO is this right?? change
+		// TODO is this right?? change
 		startGettingEvents();
 	}
 	// if there's a clip ID, we're doing a clip.
 	else if ('clipID' in searchData) {
-		//set the playback type
+		// set the playback type
 		playback.type = 'clip';
 
-		//store the id of the clip to playback
+		// store the id of the clip to playback
 		clip.clipID = searchData.clipID;
 
-		//if there is a session id in the url
-		if('sessionID' in searchData) {
+		// if there is a session id in the url
+		if ('sessionID' in searchData) {
 			setPlaybackSessionId(searchData.sessionID);
 		}
 
-		//TODO is this right?? change
+		// TODO is this right?? change
 		startGettingEvents();
 	}
 	// if there's a selected text session ID, we're doing a selection playback
 	else if ('selectedTextSessionID' in searchData) {
-		//set the playback type
+		// set the playback type
 		playback.type = 'selection';
 
-		//a playback session has already been created
-		//get the newly created selected text session id from the url and store
-		//it in the global session id
+		// a playback session has already been created
+		// get the newly created selected text session id from the url and store
+		// it in the global session id
 		setPlaybackSessionId(searchData.selectedTextSessionID);
 
-		//display that we're doing a selected text playback
+		// display that we're doing a selected text playback
 		setMode("selected text playback");
 
-		//selected text playbacks needs some filter info from the playback session to
-		//make devs show up, get the filter info from the session
+		// selected text playbacks needs some filter info from the playback session to
+		// make devs show up, get the filter info from the session
 		getSelectedTextFilterInfo(getPlaybackSessionId());
 
-		//the playback session is ready, start grabbing events
+		// the playback session is ready, start grabbing events
 		grabAllEvents();
 	}
-	//else this is a plain old playback with a user specified filter
-	else if ('sessionID' in searchData){
-		//set the playback type
+	// else this is a plain old playback with a user specified filter
+	else if ('sessionID' in searchData) {
+		// set the playback type
 		playback.type = 'filtered';
 
-		//store the session id
+		// store the session id
 		setPlaybackSessionId(searchData.sessionID);
 
-		//set up the filter menu and start getting events
+		// set up the filter menu and start getting events
 		startGettingEvents();
 	}
-	//bad request!
+	// bad request!
 	else {
-		//do something smart here
+		// do something smart here
 		window.alert("Improper playback request");
 	}
 
 	$("#playbackArea").focus();
 
-	//setup the interface heights/widths and the right-click menu
+	// setup the interface heights/widths and the right-click menu
 	setupPlaybackInterface();
 	setupPlaybackRightclickMenu();
-
-
-	//create a clear event, with the ID of CLEAR
-	events.CLEAR = {
-		ID:               "CLEAR",
-		type:             "CLEAR",
-		developerGroupID: null,
-	};
 }
 
 function getSelectedTextFilterInfo(sID) {
-	//ask for a selected text playback session's filter info
+	// ask for a selected text playback session's filter info
 	$.getJSON("/playback/filter/sessionID/" + sID,
 		function(data) {
-			//store the filter info from the server
+			// store the filter info from the server
 			filterMenu = data.filters;
 
-			//process the filter info (this is needed so the playback can refer to
-			//developers and developer groups during the playback)
+			// process the filter info (this is needed so the playback can refer to
+			// developers and developer groups during the playback)
 			setupFilters(data.filters);
 
-			//set up the login window
+			// set up the login window
 			//setupLogin();
 		});
 }
@@ -273,19 +266,19 @@ function setupPlaybackInterface() {
 
 	$("#interfaceStyles").html(style);
 
-	//set location slider's width
-	var lhw = $(window).width() - $("#movement").outerWidth() - $("#etcCommands").outerWidth() - 70;
+	//set location slider"s width
+	var locationWidth = $(window).width() - $("#movement").outerWidth() - $("#etcCommands").outerWidth() - 70;
 
-	$("#locationHolder").width(lhw);
-	$("#timestamp").width(lhw);
+	$("#locationHolder").width(locationWidth);
+	$("#timestamp").width(locationWidth);
 
 	setupSpeedSlider();
 }
 
 
-/*  play/pause
-		Plays or pauses the playback, depending on if we're currently
-		playing or now. Also, change the icon the the corresponding icon.
+/*	play/pause
+	Plays or pauses the playback, depending on if we're currently
+	playing or now. Also, change the icon the the corresponding icon.
 */
 function playPause() {
 	//clear the timers that are pushing the playback with the forward or
@@ -319,7 +312,7 @@ function play() {
 		playback.playing = true;
 
 		//set the time to automatically play at speed slider speed
-		playback.player = setInterval(function() { stepForward(1); }, playback.speed);
+		playback.player = betterSetInterval(playback.speed, stepForward, 1);
 
 		//toggle the buttons
 		$("#pauseIcon").show();
@@ -418,15 +411,15 @@ function changeDevGroup(newDeveloperGroupID) {
 	Finds the relative event number of a passed in eventID and it's clipNumber
 */
 function findEvent(eventID, clipNumber) {
-	//index of event in playback.orderOfEvents
+	// index of event in playback.orderOfEvents
 	var index = 0;
 
-	//go through all the events until we come to the correct clip
+	// go through all the events until we come to the correct clip
 	while (playback.orderOfEvents[index].clipNumber < clipNumber) {
 		index++;
 	}
 
-	//now that we're in the right clip, find the event
+	// now that we're in the right clip, find the event
 	while (playback.orderOfEvents[index].eventID != eventID) {
 		index++;
 	}

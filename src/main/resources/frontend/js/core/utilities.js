@@ -5,7 +5,7 @@
 var debug = false;
 
 /*	scratch
-	put some text in our scratch pad 
+	put some text in our scratch pad
 */
 function scratch(str) {
 	if (debug) {
@@ -16,8 +16,8 @@ function scratch(str) {
 }
 
 
-/*	scratch json 
-	put some nicely formatted json in our scratch pad 
+/*	scratch json
+	put some nicely formatted json in our scratch pad
 */
 function scratch_json(json) {
 	if (debug) {
@@ -28,17 +28,17 @@ function scratch_json(json) {
 }
 
 
-/* better set interval
-   a better wrapper for setInterval
+/*	better set interval
+	a better wrapper for setInterval
 
-   Arguments:
-     waitTime: time between function calls
-     fn:       the function to be called
-     args:     arguments to be applied to fn when called
+	Arguments:
+		waitTime: time between function calls
+		fn:       the function to be called
+		args:     arguments to be applied to fn when called
 */
 function betterSetInterval(waitTime, fn, args) {
 	var intervalId = setInterval(
- 		function() {
+		function() {
 			if (Array.isArray(args)) {
 				fn.apply(this, args);
 			} else {
@@ -80,11 +80,10 @@ $.scrollbarWidth = function() {
 	Highlight an element for a set amount of time.
 */
 function highlightElement(element, time, highlightColor) {
-
 	var originalColor = $(element).css("background-color");
-	
+
 	$(element).animate({"background-color": highlightColor}, {
-		duration: 100, 
+		duration: 100,
 		easing: "linear",
 		done: function() {
 			setTimeout(function() {
@@ -147,13 +146,13 @@ function dateFormat(date) {
 	dstring += "/";
 	dstring += date.getFullYear();
 	dstring += " ";
-	
+
 	//get the hour number
 	var hour = date.getHours();
-	
+
 	//get the am or pm value
 	var amOrPm = hour < 12 ? "AM" : "PM";
-	
+
 	//if it is the midnight hour
 	if (hour === 0) {
 		//show 12 instead of 0
@@ -164,29 +163,28 @@ function dateFormat(date) {
 		//get the pm hour
 		hour = hour - 12;
 	}
-	
+
 	dstring += (hour < 10 ? "0" : "") + hour;
 	dstring += ":";
 	dstring += (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
 	dstring += ":";
 	dstring += (date.getSeconds() < 10 ? "0" : "") + date.getSeconds();
 	dstring += " " + amOrPm;
-	
-	/*  Show milliseconds - we don't want that, but if we do, it's here
-			for future reference
+
+	/*	Show milliseconds - we don't want that, but if we do, it's here
+		for future reference
 
 	dstring += ":";
-	dstring += (date.getMilliseconds() < 100 ? 
-			date.getMilliseconds() < 10 ? 
-					"00" : 
-					"0" : 
+	dstring += (date.getMilliseconds() < 100 ?
+			date.getMilliseconds() < 10 ?
+					"00" :
+					"0" :
 			"");
 	dstring += date.getMilliseconds();
 	*/
 
 	return dstring;
 }
-
 
 
 function getSelectedElements() {
