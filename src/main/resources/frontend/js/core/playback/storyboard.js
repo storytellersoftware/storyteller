@@ -24,21 +24,21 @@ function commentClick(commentID, idOfClipInDOM) {
 	//Get the comment's position in relative events
 	//get the comment based on comment id
 	var comment = comments[commentID.substr("comment-".length)];
-	
+
 	//get the event associated with the comment
 	var event = events[comment.eventID];
-	
+
 	//get the clip number
 	var idSplit = idOfClipInDOM.split("-");
 	var clipNum = parseInt(idSplit[1]);
-	
+
 	//get the position of the event (where???)
 	var pos = findEvent(event.ID, clipNum) + 1;
 
 	//Step to the pos and don't animate things
 	step(pos, false);
 	console.log(comment);
-	
+
 	//highlight the text for this comment
 	highlightElements(clipNum + "-" + comment.startHighlightedEventID, clipNum + "-" + comment.endHighlightedEventID);
 }

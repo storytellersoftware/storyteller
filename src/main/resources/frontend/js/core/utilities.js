@@ -28,6 +28,30 @@ function scratch_json(json) {
 }
 
 
+/* better set interval
+   a better wrapper for setInterval
+
+   Arguments:
+     waitTime: time between function calls
+     fn:       the function to be called
+     args:     arguments to be applied to fn when called
+*/
+function betterSetInterval(waitTime, fn, args) {
+	var intervalId = setInterval(
+ 		function() {
+			if (Array.isArray(args)) {
+				fn.apply(this, args);
+			} else {
+				fn(args);
+			}
+		},
+		waitTime
+	);
+
+	return intervalId;
+}
+
+
 /*	scrollbar width
 	return scrollbar's width
 */
@@ -56,6 +80,7 @@ $.scrollbarWidth = function() {
 	Highlight an element for a set amount of time.
 */
 function highlightElement(element, time, highlightColor) {
+
 	var originalColor = $(element).css("background-color");
 	
 	$(element).animate({"background-color": highlightColor}, {
