@@ -171,41 +171,23 @@ function dateFormat(date) {
 	dstring += (date.getSeconds() < 10 ? "0" : "") + date.getSeconds();
 	dstring += " " + amOrPm;
 
-	/*	Show milliseconds - we don't want that, but if we do, it's here
-		for future reference
-
-	dstring += ":";
-	dstring += (date.getMilliseconds() < 100 ?
-			date.getMilliseconds() < 10 ?
-					"00" :
-					"0" :
-			"");
-	dstring += date.getMilliseconds();
-	*/
-
 	return dstring;
 }
 
 
 function getSelectedElements() {
-	var ids = [];
-
 	var selection = window.getSelection();
 
 	// return an array of nulls
-	if(selection.type != "Range"){
-		return [null,null];
+	if (selection.type != "Range") {
+		return [null, null];
 	}
 
 	var elements = $(selection.getRangeAt(0).cloneContents()).children();
 
 	// We had to use a regular for loop and not a for each because the for each
 	// was an asynchronous call.
-	for (var i = 0; i < elements.length; i++) {
-		ids.push(elements[i].id);
-	}
-
-	return ids;
+	return _.map(elements, function(element) { return element.id; });
 }
 
 /*	highlight elements
@@ -213,7 +195,7 @@ function getSelectedElements() {
 */
 function highlightElements(start, end) {
 	var currentID = start;
-	while(currentID != end) {
+	while (currentID != end) {
 		$("#" + currentID).addClass("highlight");
 		currentID = $("#" + currentID).next().attr("id");
 	}

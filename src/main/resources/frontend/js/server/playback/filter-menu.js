@@ -102,26 +102,11 @@ function getNodes() {
 	$.getJSON("/node/all/sessionID/" + getPlaybackSessionId(), function(data) {
 		//empty out the previous node information
 		nodes = {};
-		var rootNode;
-		var openNode;
+		var rootNode = _.find(data.nodes, {parentNodeID: "null"}).ID;
+		var openNode = _.find(data.nodes, {type: "OPEN_NODE"}).ID;
 
-		$.each(data.nodes, function(i, node) {
-			if (node.parentNodeID == "null") {
-				rootNode = node.ID;
-			}
-
-			//record the one open node
-			if (node.type == "OPEN_NODE") {
-				openNode = node.ID;
-				node.name = node.name + " (Open Node)";
-				$("#selectedNodeName").empty();
-				$("#selectedNodeName").append("Selected Node: " + node.name);
-				$("#selectedNodeDescription").empty();
-				$("#selectedNodeDescription").append("Description: " + node.description);
-			}
-
-			// add node to nodes
-			nodes[node.ID] = {
+		nodes = _.reduce(data.nodes, function(result, node) {
+			result[node.ID] = {
 				ID: node.ID,
 				lineageNumber: node.lineageNumber,
 				parentNodeID: node.parentNodeID,
@@ -131,15 +116,15 @@ function getNodes() {
 				description: node.description,
 				type: node.type,
 			};
-		});
+			return result;
+		}, {});
 
-		$.each(nodes, function(i, parent) {
-			$.each(nodes, function(j, child) {
-				if (parent.ID === child.parentNodeID) {
-					parent.children.push(child.ID);
-					child.parents.push(parent.ID);
-				}
-			});
+		$("#selectedNodeName").text("Selected Node: " + nodes[openNode].name);
+		$("#selectedNodeDescription").text("Description: " + nodes[openNode].description);
+
+		_.forEach(nodes, function(node) {
+			node.children = _.filter(nodes, { "parentNodeID": node.ID });
+			_.forEach(node.children, function(child) { child.parents.push(node.ID); });
 		});
 
 		createNodeTree(nodes, rootNode, openNode);
@@ -158,14 +143,12 @@ function createNodeTree(nodes, rootNode, selectedNode) {
 	var ul = $("<ul/>");
 
 	$.each(nodes, function(i, node) {
-
 		node.li = $('<li/>', {id: node.ID});
 		var input = $('<input/>', {
 			type: 'radio',
 			name: 'node',
 			class: 'node',
-			value: node.ID,
-			//TODO get the name and description of the node in the UI somehow, right now it is only an id
+			value: node.name ? node.name : node.ID,
 		});
 
 		if (node.ID == selectedNode) {
@@ -179,8 +162,9 @@ function createNodeTree(nodes, rootNode, selectedNode) {
 		if (node.parentNodeID != 'null') {
 			nodes[node.parentNodeID].ul.append(node.li);
 		}
+
+		node.ul.appendTo(node.li);
 	});
-	$.each(nodes, function(i, node) { node.li.append(node.ul); });
 
 	ul.append(nodes[rootNode].li);
 	$("#nodeSelect").append(ul);
@@ -220,7 +204,7 @@ function getNode(nodeID) {
 	$.getJSON('/node/' + nodeID + '/sessionID/' + getPlaybackSessionId() + '/getfilterparams', function(data) {
 		scratch_json(data);
 
-	//store the filter parameters from the server (earliest/latest event, etc.)
+		//store the filter parameters from the server (earliest/latest event, etc.)
 		filterMenu = data;
 
 		//store the documents in the lineage

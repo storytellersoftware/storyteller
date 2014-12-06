@@ -167,8 +167,7 @@ function changeSpeed(percent) {
 	//if the user selected the max speed
 	if (percent === 100) {
 		setPlaybackAnimations(false);
-	}
-	else {
+	} else {
 		setPlaybackAnimations(true);
 	}
 

@@ -121,7 +121,6 @@ function setupStoryboardInterface() {
 	sets them up to be dragged into the timeline.
 */
 function getClips() {
-
 	$.getJSON('/clip/all/sessionID/' + getPlaybackSessionId(), function(data) {
 		/*
 			`data` *should* be a JSON array of clip objects.
@@ -156,16 +155,16 @@ function getClips() {
 			);
 
 
-			var button = $("<button/>", {}).append(
-				$("<img/>", {src: "/img/x.svg"})
-			);
-			button.click(function(event) {
-				event.preventDefault();
+			var button = $("<button/>", {})
+				.append($("<img/>", {src: "/img/x.svg"}))
+				.click(function(event) {
+					event.preventDefault();
 
-				$.get("/clip/delete/" + clipJSON.ID + "/sessionID/" + getPlaybackSessionId(), function(data) {
-					$('.clip[clipid=' + clipJSON.ID + ']').fadeRemove();
-				});
-			}).prependTo(div);
+					$.get("/clip/delete/" + clipJSON.ID + "/sessionID/" + getPlaybackSessionId(), function(data) {
+						$('.clip[clipid=' + clipJSON.ID + ']').fadeRemove();
+					});
+				})
+				.prependTo(div);
 
 			// add the div to the clips area
 			div.appendTo('#clips');
@@ -239,9 +238,8 @@ function submitStoryboard() {
 //    return;
 //  }
 
-	// check that a title has been set
-	// now 10% more idiot proof.
 	if ($("#storyboardTitle").val().trim() === "") {
+		// There is currently no title, don't move forward.
 		$("#storyboardTitle").focus();
 		return;
 	}
@@ -274,7 +272,6 @@ function submitStoryboard() {
 	$.post('/storyboard/new/sessionID/' + getPlaybackSessionId(),
 		{ storyboard: JSON.stringify(storyboard) },
 		function(data) {
-			// do something with that information...
 			// open a new window and play the storyboard
 			// playStoryboard(data.storyboardID);
 			window.location = "playback.html?storyboardID=" + data.storyboardID + "&sessionID=" + getPlaybackSessionId();
@@ -358,7 +355,6 @@ function deleteItem(ui) {
 	// ui.position holds a position relative to the (0, 0) of
 	// the timeline.
 	if (ui.position.top < -20 - $(ui.item[0]).height()) {
-
 		// setup the dragged out item for our delete animation
 		$(ui.item[0]).css({
 			"position": "absolute",

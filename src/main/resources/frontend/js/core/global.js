@@ -29,28 +29,17 @@ function getPlaybackSessionId() {
 	key/value pairs.
 */
 function getSearchData() {
-	//object with name value pairs in the url string
-	var searchParams = {};
-
-	//if there is a string to parse
-	if (window.location.search !== '' && window.location.search.length > 1) {
-		//throw out the ?
-		var searchString = window.location.search.substring(1);
-
-		//split by & for params
-		var pairs = searchString.split('&');
-
-		//for each name/value pair from the url
-		$.each(pairs, function(i, pair) {
-			//split into key/value
-			var pairSplit = pair.split('=');
-
-			//add to searchParams
-			searchParams[pairSplit[0]] = pairSplit[1];
-		});
+	if (window.location.search === '' || window.location.search.length <= 1) {
+		// There are no search parameters in the URL.
+		return {};
 	}
+	//throw out the `?`
+	var searchString = window.location.search.substring(1);
 
-	return searchParams;
+	return _.transform(searchString.split("&"), function(result, pair) {
+		var split = pair.split("=");
+		result[split[0]] = split[1];
+	});
 }
 
 /*	set mode

@@ -14,7 +14,7 @@ function getStoryboardEvents() {
 	getDevelopers();
 
 	// get all clips in storyboard
-		$.getJSON('/storyboard/' + storyboard.storyboardID + '/sessionID/' + getPlaybackSessionId(), function(data) {
+	$.getJSON('/storyboard/' + storyboard.storyboardID + '/sessionID/' + getPlaybackSessionId(), function(data) {
 		storyboard.clips = data.clips;
 		storyboard.name = data.name;
 		storyboard.description = data.description;
@@ -61,7 +61,7 @@ function getNextClip() {
 	// check to make sure we're not going out of bounds
 	if (eventGrabber.clipNumber >= storyboard.clips.length) {
 		//if we're at the end, remove the last CLEAR event
-		if(playback.orderOfEvents[playback.orderOfEvents.length - 1].eventID === "CLEAR") {
+		if (playback.orderOfEvents[playback.orderOfEvents.length - 1].eventID === "CLEAR") {
 			playback.orderOfEvents.splice(playback.orderOfEvents.length - 1, 1);
 		}
 

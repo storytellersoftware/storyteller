@@ -87,15 +87,11 @@ function stepForward(steps, animate) {
 		}
 		//if this is a clip or storyboard playback
 		else if (playback.type === 'clip' || playback.type === 'storyboard') {
-			//go through all the index values where there is a comment
-			for (i = 0; i < playback.eventsWithCommentsIndexValues.length; i++) {
-				//if we find a comment index beyond the current position
-				if (playback.eventsWithCommentsIndexValues[i] > playback.position) {
-					//calculate how many steps it will take to get there
-					steps = playback.eventsWithCommentsIndexValues[i] - playback.position + 1;
-					break;
-				}
-			}
+			var nextCommentIndex = _.find(playback.eventsWithCommentsIndexValues, function(commentIndex) {
+				return commentIndex > playback.position;
+			});
+
+			steps = nextCommentIndex - playback.position + 1;
 		}
 
 		//indicate there should be no animation
@@ -115,7 +111,7 @@ function stepForward(steps, animate) {
 			break;
 		}
 
-		//if the current event isn't the last and it isn't relevant, move forward
+		// fast-forward through irrelevant events
 		while (!lastEvent() && !isRelevant() && doStepForward(animate)) {
 			//update the number of steps taken for irrelevant events
 			i++;
@@ -348,7 +344,7 @@ function doStepBackward(animate) {
 	delete event (going backward), we add the event to the
 	screen.
 */
-function insert(orderEvent, forwards, animate) {
+function insert(orderEvent, movingForwards, animate) {
 	//get the full event from the passed in event
 	var event = events[orderEvent.eventID];
 
@@ -360,7 +356,7 @@ function insert(orderEvent, forwards, animate) {
 
 	//if we're going backward, these actually need to be different, because this
 	//is the reverse of a DELETE event.
-	if (!forwards) {
+	if (!movingForwards) {
 		//if in reverse, get the previous neighbor
 		event = events[orderEvent.previousNeighborID];
 
@@ -436,7 +432,7 @@ function insert(orderEvent, forwards, animate) {
 	insert event (going backward), we remove the event from the
 	screen.
 */
-function del(orderEvent, forward, animate) {
+function del(orderEvent, movingForwards, animate) {
 	//get the full event
 	var event = events[orderEvent.eventID];
 
@@ -447,7 +443,7 @@ function del(orderEvent, forward, animate) {
 	var displayRelevantButDoNotAnimate = orderEvent.displayRelevantButDoNotAnimate;
 
 	//if we are moving forward when we delete these values are a little different
-	if (forward) {
+	if (movingForwards) {
 		//get the event's previous neighbor
 		event = events[orderEvent.previousNeighborID];
 
@@ -463,7 +459,7 @@ function del(orderEvent, forward, animate) {
 	var docID = orderEvent.clipNumber + "-" + event.documentID;
 
 	//check if this event is in the current active document tab, if not then change it
-	if(playback.documentID != docID) {
+	if (playback.documentID != docID) {
 		changeDocument(docID,animate);
 	}
 
