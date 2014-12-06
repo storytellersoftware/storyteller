@@ -1,51 +1,52 @@
 /*
-    playback/CLIPS.js
-    Contains things specific to clip playbacks
+	playback/CLIPS.js
+	Contains things specific to clip playbacks
 
-    Requirements:
-      - playback/main.js
-          Contains grabEvents
+	Requirements:
+		- playback/main.js
+			Contains grabEvents
 
-      - filtering.js
-          Contains filters array
+		- filtering.js
+			Contains filters array
 
-      - global.js
-          Contains setMode
+		- global.js
+			Contains setMode
 
-      - comments.js
-          contains addComments and ShowCommentSection
+		- comments.js
+			contains addComments and ShowCommentSection
 */
 
 var clip = {
-  clipID: null,
+	clipID: null,
 };
 
-/* get clip events
-  This will grab all of the events in a clip from
-  the server and set up the developer information.
+/*	get clip events
+	This will grab all of the events in a clip from
+	the server and set up the developer information.
 */
 function getClipEvents() {
-  getDevelopers();
+	getDevelopers();
 
-  $.getJSON('/clip/' + clip.clipID + '/sessionID/' + getPlaybackSessionId(), 
-  function(data) {
-    filters[0] = data.filters;
-    addComments(0, data.comments);
-    showCommentSection();
+	$.getJSON('/clip/' + clip.clipID + '/sessionID/' + getPlaybackSessionId(),
+		function(data) {
+			filters[0] = data.filters;
+			addComments(0, data.comments);
+			showCommentSection();
 
-    setMode(data.name);
+			setMode(data.name);
 
-    showDescription(data);
+			showDescription(data);
 
-    $.post('/filter/sessionID/' + getPlaybackSessionId(), 
-      { filters: JSON.stringify(filters[0]) }, function() {
-        setupPlaybackInterface();
-        
-        eventGrabber.currentIndex = 0;
-        eventGrabber.done = false;
+			$.post('/filter/sessionID/' + getPlaybackSessionId(),
+				{ filters: JSON.stringify(filters[0]) }, function() {
+					setupPlaybackInterface();
 
-        eventGrabber.poller = setInterval(grabEvents, 50);
-      } 
-    );
-  });
+					eventGrabber.currentIndex = 0;
+					eventGrabber.done = false;
+
+					eventGrabber.poller = setInterval(grabEvents, 50);
+				}
+			);
+		}
+	);
 }
