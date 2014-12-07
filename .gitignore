@@ -8,19 +8,24 @@
 build/
 .gradle
 
+# Windows / OS X files
 .DS_Store
 Thumbs.db
 
+# Generated files
 bin/
 gen/
 *.class
 
+# Eclipse and IntelliJ files
 local.properties
 .classpath
 .project
 .settings/
 .idea
 *.iml
+*.ipr
+*.iws
 
 *.swp
 *~
