@@ -4,4 +4,5 @@
 *.jpg binary
 *.png binary
 *.ico binary
-
+*.jar binary
+*.zip binary
