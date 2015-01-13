@@ -1,114 +1,100 @@
 package playback.handler;
 
-import httpserver.HTTPException;
-import httpserver.HTTPRequest;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import playback.PlaybackSession;
-import playback.PlaybackSessionServer;
-
 import core.Constants;
 import core.data.DBAbstraction;
 import core.data.DBAbstractionException;
 import core.entities.Node;
 import core.services.json.JSONiffy;
+import httpserver.HTTPException;
+import httpserver.HTTPRequest;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import playback.PlaybackSession;
+import playback.PlaybackSessionServer;
+
+import java.util.List;
 
 
-public class NodeHandler extends StorytellerHTTPHandler
-{
-	public NodeHandler(HTTPRequest request, PlaybackSessionServer sessionManager) throws HTTPException
-	{
-		super(request, sessionManager);
+public class NodeHandler extends StorytellerHTTPHandler {
+    public NodeHandler(HTTPRequest request, PlaybackSessionServer sessionManager) throws HTTPException {
+        super(request, sessionManager);
 
-		//Create
-		//addPOST("/new/sessionID/{String}" , "postCreateNode");
-		
-		//Retrieve
-		//addGET("/{String}/sessionID/{String}", "getSingle");
-		
-		// /node/all/sessionID/123
-		addGET("/all/sessionID/{String}", "getAll");
-		
-		// /node/234/sessionID/123/getfilterparams
-		addGET("/{String}/sessionID/{String}/getfilterparams", "getFilterParams");
-		
-		//Update
-		//addPOST("/{String}/sessionID/{String}/update" , "postUpdate");
-		
-		//Destroy
-		//addGET("/{String}/sessionID/{String}/delete" , "getDelete");
-		//addGET("/all/sessionID/{String}/delete" , "getDeleteAll");
-	}
+        //Create
+        //addPOST("/new/sessionID/{String}" , "postCreateNode");
 
-	/**
-	 * /node/all/sessionID/123 
-	 * addGET("/all/sessionID/{String}", "getAll");
-	 */
-	public void getAll(String sessionId)
-	{
-		try
-		{
-			//using the session id, get the db for the session
-			DBAbstraction db = getPlaybackSessionServer().getPlaybackSession(sessionId).getDatabase();
-			
-			//get all the nodes in the database
-			List<Node> nodes = db.getAllNodes();
-			
-			//add them to a json array
-			JSONArray allNodes = JSONiffy.toJSON(nodes);			
-			JSONObject json = new JSONObject();
-			json.put(Constants.NODES, allNodes);
-			
-			setJSON(json);
-			
-			setHandled(true);
-		}
-		catch(JSONException | DBAbstractionException e)
-		{
-			error(500, EXCEPTION_ERROR, e);
-		}
-	}
-	
-	/**
-	 * /node/234/sessionID/123/getfilterparams
-	 * addGET("/{String}/sessionID/{String}/getfilterparams", "getFilterParams");
-	 */
-	public void getFilterParams(String nodeId, String sessionId)
-	{
-		PlaybackSession temporaryPlaybackSession = null; 
-				
-		try
-		{
-			//get the logged in developer group from the session
-			String loggedInDevGroupId = getPlaybackSessionServer().getPlaybackSession(sessionId).getLoggedInDeveloperGroupId();
-			
-			//using the session id, get the db for the session
-			DBAbstraction db = getPlaybackSessionServer().getPlaybackSession(sessionId).getDatabase();
+        //Retrieve
+        //addGET("/{String}/sessionID/{String}", "getSingle");
 
-			//create a throwaway playback session that builds up the required nodes to build the filter info
-			temporaryPlaybackSession = new PlaybackSession(db, loggedInDevGroupId, nodeId, -1);
-			
-			//create a JSON object with the filter information for the client
-			JSONObject returnFilters = temporaryPlaybackSession.createFilterInfo(true);
-			
-			//return the json
-			setJSON(returnFilters);
-			setHandled(true);
-		}
-		catch (DBAbstractionException e)
-		{
-			error(418, "no node by that id", e);
-			return;
-		}
-		catch(Exception e)
-		{
-			error(500, EXCEPTION_ERROR, e);
-		}
-	}
+        // /node/all/sessionID/123
+        addGET("/all/sessionID/{String}", "getAll");
+
+        // /node/234/sessionID/123/getfilterparams
+        addGET("/{String}/sessionID/{String}/getfilterparams", "getFilterParams");
+
+        //Update
+        //addPOST("/{String}/sessionID/{String}/update" , "postUpdate");
+
+        //Destroy
+        //addGET("/{String}/sessionID/{String}/delete" , "getDelete");
+        //addGET("/all/sessionID/{String}/delete" , "getDeleteAll");
+    }
+
+    /**
+     * /node/all/sessionID/123
+     * addGET("/all/sessionID/{String}", "getAll");
+     */
+    public void getAll(String sessionId) {
+        try {
+            //using the session id, get the db for the session
+            DBAbstraction db = getPlaybackSessionServer().getPlaybackSession(sessionId).getDatabase();
+
+            //get all the nodes in the database
+            List<Node> nodes = db.getAllNodes();
+
+            //add them to a json array
+            JSONArray allNodes = JSONiffy.toJSON(nodes);
+            JSONObject json = new JSONObject();
+            json.put(Constants.NODES, allNodes);
+
+            setJSON(json);
+
+            setHandled(true);
+        } catch (JSONException | DBAbstractionException e) {
+            error(500, EXCEPTION_ERROR, e);
+        }
+    }
+
+    /**
+     * /node/234/sessionID/123/getfilterparams
+     * addGET("/{String}/sessionID/{String}/getfilterparams", "getFilterParams");
+     */
+    public void getFilterParams(String nodeId, String sessionId) {
+        PlaybackSession temporaryPlaybackSession = null;
+
+        try {
+            //get the logged in developer group from the session
+            String loggedInDevGroupId = getPlaybackSessionServer().getPlaybackSession(sessionId).getLoggedInDeveloperGroupId();
+
+            //using the session id, get the db for the session
+            DBAbstraction db = getPlaybackSessionServer().getPlaybackSession(sessionId).getDatabase();
+
+            //create a throwaway playback session that builds up the required nodes to build the filter info
+            temporaryPlaybackSession = new PlaybackSession(db, loggedInDevGroupId, nodeId, -1);
+
+            //create a JSON object with the filter information for the client
+            JSONObject returnFilters = temporaryPlaybackSession.createFilterInfo(true);
+
+            //return the json
+            setJSON(returnFilters);
+            setHandled(true);
+        } catch (DBAbstractionException e) {
+            error(418, "no node by that id", e);
+            return;
+        } catch (Exception e) {
+            error(500, EXCEPTION_ERROR, e);
+        }
+    }
 
 //currently unused	
 //	public void postCreateNode(String sessionId)

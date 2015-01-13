@@ -8,60 +8,55 @@ import java.util.Date;
 //import core.Constants;
 
 
-public class DeleteDocumentEvent extends DocumentEvent 
-{
-	public static final String DELETE_DOCUMENT_EVENT_TYPE = "DELETE-DOCUMENT"; 
+public class DeleteDocumentEvent extends DocumentEvent {
+    public static final String DELETE_DOCUMENT_EVENT_TYPE = "DELETE-DOCUMENT";
 
-	//this is the old name of a document
-	private String documentOldName;
+    //this is the old name of a document
+    private String documentOldName;
 
-	/**
-	 * Constructor used when creating a new DeleteDocumentEvent. Will generate a unique Id.
-	 * @param timestamp
-	 * @param createdUnderNodeId
-	 * @param devGroupId
-	 * @param nodeSequenceNum
-	 * @param sequentiallyBeforeEventId
-	 * @param docID
-	 */
-	public DeleteDocumentEvent(Date timestamp, String createdUnderNodeId, String devGroupId, int nodeSequenceNum, String sequentiallyBeforeEventId, String docId,  String parentDirectoryId, String docOldName) 
-	{
-		super(timestamp, createdUnderNodeId, devGroupId, nodeSequenceNum, sequentiallyBeforeEventId, docId, parentDirectoryId);
-		
-		//store the doc's name
-		setDocumentOldName(docOldName);
-	}
+    /**
+     * Constructor used when creating a new DeleteDocumentEvent. Will generate a unique Id.
+     *
+     * @param timestamp
+     * @param createdUnderNodeId
+     * @param devGroupId
+     * @param nodeSequenceNum
+     * @param sequentiallyBeforeEventId
+     * @param docID
+     */
+    public DeleteDocumentEvent(Date timestamp, String createdUnderNodeId, String devGroupId, int nodeSequenceNum, String sequentiallyBeforeEventId, String docId, String parentDirectoryId, String docOldName) {
+        super(timestamp, createdUnderNodeId, devGroupId, nodeSequenceNum, sequentiallyBeforeEventId, docId, parentDirectoryId);
 
-	public DeleteDocumentEvent(String id, Date timestamp, String createdUnderNodeId, String devGroupId, int nodeSequenceNum, String sequentiallyBeforeEventId, String docId,  String parentDirectoryId, String docOldName) 
-	{
-		super(id, timestamp, createdUnderNodeId, devGroupId, nodeSequenceNum, sequentiallyBeforeEventId, docId, parentDirectoryId);
-		
-		//store the doc's name
-		setDocumentOldName(docOldName);
-	}
-	
-	@Override
-	public String getEventType() 
-	{
-		return DELETE_DOCUMENT_EVENT_TYPE;
-	}
-	
-	@Override
-	public String toString()
-	{
-		StringBuilder builder = new StringBuilder(super.toString());
-		if (documentOldName != null)
-		{
-			builder.append(", ");
-			builder.append("documentBeingDeleted=");
-			builder.append(documentOldName);
-		}
-		builder.append("]");
-		return builder.toString();
-	}
+        //store the doc's name
+        setDocumentOldName(docOldName);
+    }
+
+    public DeleteDocumentEvent(String id, Date timestamp, String createdUnderNodeId, String devGroupId, int nodeSequenceNum, String sequentiallyBeforeEventId, String docId, String parentDirectoryId, String docOldName) {
+        super(id, timestamp, createdUnderNodeId, devGroupId, nodeSequenceNum, sequentiallyBeforeEventId, docId, parentDirectoryId);
+
+        //store the doc's name
+        setDocumentOldName(docOldName);
+    }
+
+    @Override
+    public String getEventType() {
+        return DELETE_DOCUMENT_EVENT_TYPE;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder(super.toString());
+        if (documentOldName != null) {
+            builder.append(", ");
+            builder.append("documentBeingDeleted=");
+            builder.append(documentOldName);
+        }
+        builder.append("]");
+        return builder.toString();
+    }
 
 
-//	@Override
+    //	@Override
 //	@Deprecated
 //	public JSONObject toJSON() throws JSONException 
 //	{
@@ -70,15 +65,13 @@ public class DeleteDocumentEvent extends DocumentEvent
 //		
 //		return tempJsonObject;
 //	}
-	public String getDocumentOldName()
-	{
-		return documentOldName;
+    public String getDocumentOldName() {
+        return documentOldName;
 
-	}
+    }
 
-	public void setDocumentOldName(String documentOldName)
-	{
-		this.documentOldName = documentOldName;
-	}
+    public void setDocumentOldName(String documentOldName) {
+        this.documentOldName = documentOldName;
+    }
 
 }

@@ -8,41 +8,35 @@ import java.util.Date;
 //import core.Constants;
 
 
+public abstract class CombinatorialEvent extends StorytellerEvent {
+    private String documentId;
 
-public abstract class CombinatorialEvent extends StorytellerEvent
-{
-	private String documentId;
-	
-	public CombinatorialEvent(Date timestamp, String createdUnderNodeId, String devGroupId, int NodeSequenceNum, String sequentiallyBeforeEventId, String documentId)
-	{
-		super(timestamp, createdUnderNodeId, devGroupId, NodeSequenceNum, sequentiallyBeforeEventId);
-		this.documentId = documentId;
-		
-	}
-	
-	public CombinatorialEvent(String id, Date timestamp, String createdUnderNodeId, String devGroupId, int NodeSequenceNum, String sequentiallyBeforeEventId, String documentId)
-	{
-		super(id, timestamp, createdUnderNodeId, devGroupId, NodeSequenceNum, sequentiallyBeforeEventId);
-		this.documentId = documentId;
-		
-	}
-	
-	public String getDocumentId() {
-		return documentId;
-	}
-	
-	@Override
-	public String toString()
-	{
-		StringBuilder builder = new StringBuilder(super.toString());
-		if (documentId != null)
-		{
-			builder.append(", ");
-			builder.append("documentId=");
-			builder.append(documentId);
-		}
-		return builder.toString();
-	}
+    public CombinatorialEvent(Date timestamp, String createdUnderNodeId, String devGroupId, int NodeSequenceNum, String sequentiallyBeforeEventId, String documentId) {
+        super(timestamp, createdUnderNodeId, devGroupId, NodeSequenceNum, sequentiallyBeforeEventId);
+        this.documentId = documentId;
+
+    }
+
+    public CombinatorialEvent(String id, Date timestamp, String createdUnderNodeId, String devGroupId, int NodeSequenceNum, String sequentiallyBeforeEventId, String documentId) {
+        super(id, timestamp, createdUnderNodeId, devGroupId, NodeSequenceNum, sequentiallyBeforeEventId);
+        this.documentId = documentId;
+
+    }
+
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder(super.toString());
+        if (documentId != null) {
+            builder.append(", ");
+            builder.append("documentId=");
+            builder.append(documentId);
+        }
+        return builder.toString();
+    }
 
 //	@Override
 //	@Deprecated
@@ -51,8 +45,6 @@ public abstract class CombinatorialEvent extends StorytellerEvent
 //		tempJSONObject.put(Constants.DOCUMENT_ID, getDocumentId());
 //		return tempJSONObject;
 //	}
-
-	
 
 
 }

@@ -8,64 +8,59 @@ import java.util.Date;
 //import core.Constants;
 
 
-public class CreateDirectoryEvent extends DirectoryEvent 
-{
-	public static final String CREATE_DIRECTORY_EVENT_TYPE = "CREATE-DIRECTORY"; 
-	
-	//name of the newly created directory
-	private String directoryNewName;
-	
-	/**
-	 * Constructor for creating a new CreateDirectoryEvent. Will generate a unique ID.
-	 * @param timestamp
-	 * @param createdUnderNodeId
-	 * @param devGroupId
-	 * @param nodeSequenceNum
-	 * @param sequentiallyBeforeEventId
-	 * @param directoryId
-	 * @param directoryNewName
-	 * @param parentDirectoryId
-	 */
-	public CreateDirectoryEvent(Date timestamp, String createdUnderNodeId, String devGroupId, int nodeSequenceNum, String sequentiallyBeforeEventId, String directoryId, String directoryNewName, String parentDirectoryId)
-	{
-		super(timestamp, createdUnderNodeId, devGroupId, nodeSequenceNum, sequentiallyBeforeEventId, directoryId, parentDirectoryId);
-		setDirectoryNewName(directoryNewName);
-	}
+public class CreateDirectoryEvent extends DirectoryEvent {
+    public static final String CREATE_DIRECTORY_EVENT_TYPE = "CREATE-DIRECTORY";
 
-	public CreateDirectoryEvent(String id, Date timestamp, String createdUnderNodeId, String devGroupId, int nodeSequenceNum, String sequentiallyBeforeEventId, String directoryId, String directoryNewName, String parentDirectoryId)
-	{
-		super(id, timestamp, createdUnderNodeId, devGroupId, nodeSequenceNum, sequentiallyBeforeEventId, directoryId, parentDirectoryId);
-		setDirectoryNewName(directoryNewName);
-	}
-	
-	@Override
-	public String getEventType() 
-	{
-		return CREATE_DIRECTORY_EVENT_TYPE;
-	}
-	@Override
-	public String toString()
-	{
-		StringBuilder builder = new StringBuilder(super.toString());
-		if (directoryNewName != null)
-		{
-			builder.append(", ");
-			builder.append("directoryNewName=");
-			builder.append(directoryNewName);
-		}
-		builder.append("]");
-		return builder.toString();
-	}
+    //name of the newly created directory
+    private String directoryNewName;
 
-	//Getters and Setters
-	public String getDirectoryNewName()
-	{
-		return directoryNewName;
-	}
-	public void setDirectoryNewName(String directoryNewName)
-	{
-		this.directoryNewName = directoryNewName;
-	}
+    /**
+     * Constructor for creating a new CreateDirectoryEvent. Will generate a unique ID.
+     *
+     * @param timestamp
+     * @param createdUnderNodeId
+     * @param devGroupId
+     * @param nodeSequenceNum
+     * @param sequentiallyBeforeEventId
+     * @param directoryId
+     * @param directoryNewName
+     * @param parentDirectoryId
+     */
+    public CreateDirectoryEvent(Date timestamp, String createdUnderNodeId, String devGroupId, int nodeSequenceNum, String sequentiallyBeforeEventId, String directoryId, String directoryNewName, String parentDirectoryId) {
+        super(timestamp, createdUnderNodeId, devGroupId, nodeSequenceNum, sequentiallyBeforeEventId, directoryId, parentDirectoryId);
+        setDirectoryNewName(directoryNewName);
+    }
+
+    public CreateDirectoryEvent(String id, Date timestamp, String createdUnderNodeId, String devGroupId, int nodeSequenceNum, String sequentiallyBeforeEventId, String directoryId, String directoryNewName, String parentDirectoryId) {
+        super(id, timestamp, createdUnderNodeId, devGroupId, nodeSequenceNum, sequentiallyBeforeEventId, directoryId, parentDirectoryId);
+        setDirectoryNewName(directoryNewName);
+    }
+
+    @Override
+    public String getEventType() {
+        return CREATE_DIRECTORY_EVENT_TYPE;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder(super.toString());
+        if (directoryNewName != null) {
+            builder.append(", ");
+            builder.append("directoryNewName=");
+            builder.append(directoryNewName);
+        }
+        builder.append("]");
+        return builder.toString();
+    }
+
+    //Getters and Setters
+    public String getDirectoryNewName() {
+        return directoryNewName;
+    }
+
+    public void setDirectoryNewName(String directoryNewName) {
+        this.directoryNewName = directoryNewName;
+    }
 
 //	@Override
 //	@Deprecated

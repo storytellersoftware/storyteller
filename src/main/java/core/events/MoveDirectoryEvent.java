@@ -8,71 +8,65 @@ import java.util.Date;
 //import core.Constants;
 
 
-public class MoveDirectoryEvent extends DirectoryEvent
-{
-	public static final String MOVE_DIRECTORY_EVENT_TYPE = "MOVE-DIRECTORY";
+public class MoveDirectoryEvent extends DirectoryEvent {
+    public static final String MOVE_DIRECTORY_EVENT_TYPE = "MOVE-DIRECTORY";
 
-	//the id of the directory where the directory is moved to
-	private String newParentDirectoryId;
+    //the id of the directory where the directory is moved to
+    private String newParentDirectoryId;
 
-	/**
-	 * Constructor used when creating a new MoveDirectoryEvent. Will generate a unique ID.
-	 * @param timestamp
-	 * @param createdUnderNodeId
-	 * @param devGroupId
-	 * @param nodeSequenceNum
-	 * @param sequentiallyBeforeEventId
-	 * @param directoryId
-	 * @param parentDirectoryId
-	 * @param newParentDirectoryId
-	 */
-	public MoveDirectoryEvent(Date timestamp, String createdUnderNodeId,
-			String devGroupId, int nodeSequenceNum, String sequentiallyBeforeEventId, 
-			String directoryId, String parentDirectoryId, String newParentDirectoryId)
-	{
-		super(timestamp, createdUnderNodeId, devGroupId, nodeSequenceNum,
-				sequentiallyBeforeEventId, directoryId, parentDirectoryId);
-		setNewParentDirectoryId(newParentDirectoryId);
-	}
+    /**
+     * Constructor used when creating a new MoveDirectoryEvent. Will generate a unique ID.
+     *
+     * @param timestamp
+     * @param createdUnderNodeId
+     * @param devGroupId
+     * @param nodeSequenceNum
+     * @param sequentiallyBeforeEventId
+     * @param directoryId
+     * @param parentDirectoryId
+     * @param newParentDirectoryId
+     */
+    public MoveDirectoryEvent(Date timestamp, String createdUnderNodeId,
+                              String devGroupId, int nodeSequenceNum, String sequentiallyBeforeEventId,
+                              String directoryId, String parentDirectoryId, String newParentDirectoryId) {
+        super(timestamp, createdUnderNodeId, devGroupId, nodeSequenceNum,
+                sequentiallyBeforeEventId, directoryId, parentDirectoryId);
+        setNewParentDirectoryId(newParentDirectoryId);
+    }
 
-	public MoveDirectoryEvent(String id, Date timestamp, String createdUnderNodeId,
-			String devGroupId, int nodeSequenceNum, String sequentiallyBeforeEventId, 
-			String directoryId, String parentDirectoryId, String newParentDirectoryId)
-	{
-		super(id, timestamp, createdUnderNodeId, devGroupId, nodeSequenceNum,
-				sequentiallyBeforeEventId, directoryId, parentDirectoryId);
-		setNewParentDirectoryId(newParentDirectoryId);
-	}
-	
-	@Override
-	public String getEventType() 
-	{
-		return MOVE_DIRECTORY_EVENT_TYPE;
-	}
+    public MoveDirectoryEvent(String id, Date timestamp, String createdUnderNodeId,
+                              String devGroupId, int nodeSequenceNum, String sequentiallyBeforeEventId,
+                              String directoryId, String parentDirectoryId, String newParentDirectoryId) {
+        super(id, timestamp, createdUnderNodeId, devGroupId, nodeSequenceNum,
+                sequentiallyBeforeEventId, directoryId, parentDirectoryId);
+        setNewParentDirectoryId(newParentDirectoryId);
+    }
 
-	@Override
-	public String toString()
-	{
-		StringBuilder builder = new StringBuilder(super.toString());
-		if (newParentDirectoryId != null)
-		{
-			builder.append(", ");
-			builder.append("newParentDirectoryId=");
-			builder.append(newParentDirectoryId);
-		}
-		builder.append("]");
-		return builder.toString();
-	}
+    @Override
+    public String getEventType() {
+        return MOVE_DIRECTORY_EVENT_TYPE;
+    }
 
-	//Getters and Setters
-	public String getNewParentDirectoryId() 
-	{
-		return newParentDirectoryId;
-	}
-	public void setNewParentDirectoryId(String directoryNewID) 
-	{
-		this.newParentDirectoryId = directoryNewID;
-	}
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder(super.toString());
+        if (newParentDirectoryId != null) {
+            builder.append(", ");
+            builder.append("newParentDirectoryId=");
+            builder.append(newParentDirectoryId);
+        }
+        builder.append("]");
+        return builder.toString();
+    }
+
+    //Getters and Setters
+    public String getNewParentDirectoryId() {
+        return newParentDirectoryId;
+    }
+
+    public void setNewParentDirectoryId(String directoryNewID) {
+        this.newParentDirectoryId = directoryNewID;
+    }
 
 //	@Override
 //	@Deprecated

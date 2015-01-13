@@ -8,58 +8,51 @@ import java.util.Date;
 //import core.Constants;
 
 
+public abstract class DocumentEvent extends StorytellerEvent {
+    //this is the id of the document that is being created, moved, renamed, or deleted
+    private String documentId;
 
-public abstract class DocumentEvent extends StorytellerEvent 
-{
-	//this is the id of the document that is being created, moved, renamed, or deleted
-	private String documentId;
-	
-	//this is the id of the parent directory where the document event occurs
-	private String parentDirectoryId;
-	
-	/**
-	 * Constructor for making a brand new DocumentEvent
-	 * 
-	 * @param timestamp
-	 * @param createdUnderNodeId
-	 * @param devGroupId
-	 * @param nodeSequenceNum
-	 * @param sequentiallyBeforeEventId
-	 * @param documentId
-	 */
-	public DocumentEvent(Date timestamp, String createdUnderNodeId,String devGroupId, int nodeSequenceNum,String sequentiallyBeforeEventId, String documentId, String parentDirectoryId) 
-	{
-		super(timestamp, createdUnderNodeId, devGroupId, nodeSequenceNum,sequentiallyBeforeEventId);
-		this.documentId=documentId;
-		this.parentDirectoryId = parentDirectoryId;
-	}
+    //this is the id of the parent directory where the document event occurs
+    private String parentDirectoryId;
 
-	public DocumentEvent(String id, Date timestamp, String createdUnderNodeId,String devGroupId, int nodeSequenceNum,String sequentiallyBeforeEventId, String documentId, String parentDirectoryId) 
-	{
-		super(id, timestamp, createdUnderNodeId, devGroupId, nodeSequenceNum,sequentiallyBeforeEventId);
-		this.documentId=documentId;
-		this.parentDirectoryId = parentDirectoryId;
-	}
-	
-	@Override
-	public String toString()
-	{
-		StringBuilder builder = new StringBuilder(super.toString());
-		if (documentId != null)
-		{
-			builder.append(", ");
-			builder.append("documentId=");
-			builder.append(documentId);
-			
-		}
-		if (parentDirectoryId != null)
-		{
-			builder.append(", ");
-			builder.append("parentDirectoryId=");
-			builder.append(parentDirectoryId);
-		}
-		return builder.toString();
-	}
+    /**
+     * Constructor for making a brand new DocumentEvent
+     *
+     * @param timestamp
+     * @param createdUnderNodeId
+     * @param devGroupId
+     * @param nodeSequenceNum
+     * @param sequentiallyBeforeEventId
+     * @param documentId
+     */
+    public DocumentEvent(Date timestamp, String createdUnderNodeId, String devGroupId, int nodeSequenceNum, String sequentiallyBeforeEventId, String documentId, String parentDirectoryId) {
+        super(timestamp, createdUnderNodeId, devGroupId, nodeSequenceNum, sequentiallyBeforeEventId);
+        this.documentId = documentId;
+        this.parentDirectoryId = parentDirectoryId;
+    }
+
+    public DocumentEvent(String id, Date timestamp, String createdUnderNodeId, String devGroupId, int nodeSequenceNum, String sequentiallyBeforeEventId, String documentId, String parentDirectoryId) {
+        super(id, timestamp, createdUnderNodeId, devGroupId, nodeSequenceNum, sequentiallyBeforeEventId);
+        this.documentId = documentId;
+        this.parentDirectoryId = parentDirectoryId;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder(super.toString());
+        if (documentId != null) {
+            builder.append(", ");
+            builder.append("documentId=");
+            builder.append(documentId);
+
+        }
+        if (parentDirectoryId != null) {
+            builder.append(", ");
+            builder.append("parentDirectoryId=");
+            builder.append(parentDirectoryId);
+        }
+        return builder.toString();
+    }
 
 //	@Override
 //	@Deprecated
@@ -72,20 +65,17 @@ public abstract class DocumentEvent extends StorytellerEvent
 //		return tempJsonObject;
 //	}
 
-	//Getters 
-	public String getDocumentId() 
-	{
-		return documentId;
-	}
+    //Getters
+    public String getDocumentId() {
+        return documentId;
+    }
 
-	public String getParentDirectoryId()
-	{
-		return parentDirectoryId;
-	}
-	
-	public void setParentDirectoryId(String parentDirectoryId)
-	{
-		this.parentDirectoryId = parentDirectoryId;
-	}
+    public String getParentDirectoryId() {
+        return parentDirectoryId;
+    }
+
+    public void setParentDirectoryId(String parentDirectoryId) {
+        this.parentDirectoryId = parentDirectoryId;
+    }
 
 }
