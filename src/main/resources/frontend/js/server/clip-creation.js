@@ -124,20 +124,22 @@ function submitComment(selectedElements) {
 	}
 	*/
 
-	var comment = {};
-	comment.sessionID = getPlaybackSessionId();
-	comment.commentText = $("#commentText").val();
+	var comment = {
+		sessionID: getPlaybackSessionId(),
+		commentText: $("#commentText").val(),
+	};
 
-	comment.eventID = playback.orderOfEvents[playback.position - 1].eventID;
 	if (playback.position === 0) {
 		comment.eventID = playback.orderOfEvents[0].eventID;
+	} else {
+		comment.eventID = playback.orderOfEvents[playback.position - 1].eventID;
 	}
 
 	//comment.developerGroupID = login.group
 
 	// highlighting
-	startElement = selectedElements[0];
-	endElement = selectedElements[selectedElements.length - 1];
+	var startElement = selectedElements[0];
+	var endElement = selectedElements[selectedElements.length - 1];
 
 	if (startElement !== null) {
 		startHightlightEvent = startElement.substr(startElement.indexOf("-") + 1);

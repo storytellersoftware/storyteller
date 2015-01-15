@@ -7,6 +7,7 @@
   <link rel="shortcut icon" href="img/favicon.ico" />
 
   <!-- libraries -->
+  <script src="js/lib/lodash.min.js"></script>
   <script src="js/lib/jquery-2.0.3.min.js"></script>
   <script src="js/lib/md5.js"></script>
   <script src="js/lib/jquery.scrollTo-1.4.3.1-min.js"></script>
@@ -53,7 +54,7 @@
     <link rel="stylesheet" href="css/lib/tooltipster/tooltipster.css"/>
     <script src="js/lib/jquery.tooltipster.min.js"></script>
 
-  
+
   <!-- make our css last, giving us highest precedence -->
     <link rel="stylesheet" href="css/storyteller/playback.css" />
 
@@ -125,10 +126,10 @@
   </div>
 
 
-  <!-- for node selection -->  
+  <!-- for node selection -->
   <div id="nodeSelect"></div>
 
-  <!-- 
+  <!--
     <pre id="scratchpad"></pre>
   -->
 
@@ -164,11 +165,11 @@
         <h3>Developers</h3>
         <div id="filterDevelopers"></div>
       </div>
-      
+
       <div class="docs">
         <h3>Nodes</h3>
         <div id="filterNodes">
-          <button id="selectNodeButton" onclick="openNodeSelectDialog()">Choose a node</button>                
+          <button id="selectNodeButton" onclick="openNodeSelectDialog()">Choose a node</button>
           <br/>
           <span id="selectedNodeName">Description</span>
           <br/>
@@ -190,7 +191,7 @@
                 Animate Whole Words Only
             </label>
           </li>
-          <li>        
+          <li>
             <label class="checkbox">
               <input type="radio" name="relevantBlockType" value="lines">
                 Animate Whole Lines Only
@@ -201,8 +202,8 @@
           <input type="radio" name="relevantBlockType" value="endResult">
             Show End Result Only
         </label>
-      </div> 
-           
+      </div>
+
     </div>
 
     <div class="otherFilters">
@@ -212,13 +213,13 @@
         <input type="number" min="0" max="25" value=0 id="hideDeleteLimit" />
          Seconds
       </div>
-    
-      
+
+
       <div class="etcFilters">
         <label class="checkbox">
           <input type="checkbox" id="showPasteOrigin">
           Show Relvant Copy/Paste Origins
-        </label>        
+        </label>
       </div>
     </div>
   </div>  <!-- close filters -->

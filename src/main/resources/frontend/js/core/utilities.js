@@ -5,7 +5,7 @@
 var debug = false;
 
 /*	scratch
-	put some text in our scratch pad 
+	put some text in our scratch pad
 */
 function scratch(str) {
 	if (debug) {
@@ -16,8 +16,8 @@ function scratch(str) {
 }
 
 
-/*	scratch json 
-	put some nicely formatted json in our scratch pad 
+/*	scratch json
+	put some nicely formatted json in our scratch pad
 */
 function scratch_json(json) {
 	if (debug) {
@@ -25,6 +25,30 @@ function scratch_json(json) {
 	} else {
 		console.log(json);
 	}
+}
+
+
+/*	better set interval
+	a better wrapper for setInterval
+
+	Arguments:
+		waitTime: time between function calls
+		fn:       the function to be called
+		args:     arguments to be applied to fn when called
+*/
+function betterSetInterval(waitTime, fn, args) {
+	var intervalId = setInterval(
+		function() {
+			if (Array.isArray(args)) {
+				fn.apply(this, args);
+			} else {
+				fn(args);
+			}
+		},
+		waitTime
+	);
+
+	return intervalId;
 }
 
 
@@ -57,9 +81,9 @@ $.scrollbarWidth = function() {
 */
 function highlightElement(element, time, highlightColor) {
 	var originalColor = $(element).css("background-color");
-	
+
 	$(element).animate({"background-color": highlightColor}, {
-		duration: 100, 
+		duration: 100,
 		easing: "linear",
 		done: function() {
 			setTimeout(function() {
@@ -122,13 +146,13 @@ function dateFormat(date) {
 	dstring += "/";
 	dstring += date.getFullYear();
 	dstring += " ";
-	
+
 	//get the hour number
 	var hour = date.getHours();
-	
+
 	//get the am or pm value
 	var amOrPm = hour < 12 ? "AM" : "PM";
-	
+
 	//if it is the midnight hour
 	if (hour === 0) {
 		//show 12 instead of 0
@@ -139,50 +163,31 @@ function dateFormat(date) {
 		//get the pm hour
 		hour = hour - 12;
 	}
-	
+
 	dstring += (hour < 10 ? "0" : "") + hour;
 	dstring += ":";
 	dstring += (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
 	dstring += ":";
 	dstring += (date.getSeconds() < 10 ? "0" : "") + date.getSeconds();
 	dstring += " " + amOrPm;
-	
-	/*  Show milliseconds - we don't want that, but if we do, it's here
-			for future reference
-
-	dstring += ":";
-	dstring += (date.getMilliseconds() < 100 ? 
-			date.getMilliseconds() < 10 ? 
-					"00" : 
-					"0" : 
-			"");
-	dstring += date.getMilliseconds();
-	*/
 
 	return dstring;
 }
 
 
-
 function getSelectedElements() {
-	var ids = [];
-
 	var selection = window.getSelection();
 
 	// return an array of nulls
-	if(selection.type != "Range"){
-		return [null,null];
+	if (selection.type != "Range") {
+		return [null, null];
 	}
 
 	var elements = $(selection.getRangeAt(0).cloneContents()).children();
 
 	// We had to use a regular for loop and not a for each because the for each
 	// was an asynchronous call.
-	for (var i = 0; i < elements.length; i++) {
-		ids.push(elements[i].id);
-	}
-
-	return ids;
+	return _.map(elements, function(element) { return element.id; });
 }
 
 /*	highlight elements
@@ -190,7 +195,7 @@ function getSelectedElements() {
 */
 function highlightElements(start, end) {
 	var currentID = start;
-	while(currentID != end) {
+	while (currentID != end) {
 		$("#" + currentID).addClass("highlight");
 		currentID = $("#" + currentID).next().attr("id");
 	}
